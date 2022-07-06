@@ -149,8 +149,6 @@ primary_navigation:
             hasSeperator: true  
           - name: Other Federal Agencies
             url: "/agencies/other-agencies"
-          - name: Cross-Government Plans
-            url: "/agencies/cross-government"
   - name: Evidence Plans
     children:
       - name: Summary
@@ -208,8 +206,6 @@ collections:
   agencies:
     output: true
   other-agencies:
-    output: true
-  cross-government:
     output: true
   resources:
     output: true

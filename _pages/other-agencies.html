@@ -1,11 +1,53 @@
 ---
-layout: other-agencies
+layout: wide
 permalink: /agencies/other-agencies/
-title: Other Federal Agencies
-hero: Agencies
-collection_data: other-agencies
 ---
 
 {% comment %}
-This page is using other-agencies layout and the data is from the other-agencies collection
+This is used in blog posts. The index page can be found at blog/index.html
 {% endcomment %}
+
+
+<section class="usa-graphic-list usa-section sml-margin bg-gradient">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="tablet:grid-col">
+                <div class="text-white font-ui-2xl margin-bottom-0 text-bold">Agencies</div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="grid-container grey-back padding-top-3 padding-bottom-2">
+<div class="grid-row grid-gap">
+<div>
+<h1>Other Federal Agencies</h1>
+
+<div class="grid-container">
+    <div class="usa-graphic-list__row grid-row grid-gap padding-top-0">
+        {% for annual-evaluation-plan in site.other-agencies %}
+        {% if annual-evaluation-plan.plan-link %}
+        <div class="tablet:grid-col-6 container margin-bottom-4">
+
+            <div class="">
+                <div class="grid-row">
+                    <div class="tablet:grid-col-4">
+                        <img class="usa-media_block-img agency-seal" src="{{site.baseurl}}/{{ annual-evaluation-plan.agency-logo }}" alt="{{ annual-evaluation-plan.alt }}">
+                    </div>
+                    <div class="tablet:grid-col-8 margin-top-neg-2">
+                        <p class="eval-pol-agcy-title">{{ annual-evaluation-plan.agency-name }}</p>
+                        <p class="eval-pol-agcy-link"><a href="{{ annual-evaluation-plan.plan-link }}" aria-label="{{ annual-evaluation-plan.agency-name }} Agency Evaluation Plan" target="_blank">Evaluation Policy</a></p>
+                        {% for agency-office in annual-evaluation-plan.agency-offices %}
+                        <p class="eval-pol-agcy-link"><a href="{{ agency-office.link }}" aria-label="{{ agency-office.name }} (opens in a new window)" target="_blank">{{ agency-office.name }}</a></p>
+                        {% endfor %}
+                     </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+</div>
+</div>
+</div>

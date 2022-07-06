@@ -31,10 +31,7 @@ This is used in blog posts. The index page can be found at blog/index.html
 
         <div class="grid-container padding-left-0 padding-right-0">
             <div class="usa-graphic-list__row grid-row grid-gap padding-top-0">
-                {% assign sorted_agencies_temp = site.agencies| sort_natural: "agency-name" %}
-                {% assign sorted_cross_government = site.cross-government| sort_natural: "agency-name" %}
-                <!-- Merging the cross_government and  agencies array needed on the Learning Agendas page. -->
-                {% assign sorted_agencies = sorted_agencies_temp | concat: sorted_cross_government %}
+                {% assign sorted_agencies = site.agencies| sort_natural: "agency-name" %}
                 {% for annual-learning-agenda in sorted_agencies %}
                 {% if annual-learning-agenda.learning-agenda %}
                 <div class="tablet:grid-col-6 container margin-bottom-4">

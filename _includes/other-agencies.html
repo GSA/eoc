@@ -1,0 +1,19 @@
+{% comment %}
+This appears at the top of the page letting the user know it's an official government website
+{% endcomment %}
+
+<div class="usa-width-one-whole usa-width-tablet">
+    <h1>Other Federal Agencies</h1>
+
+    <div class="usa-grid usa-graphic_list-row">
+        <div class="usa-flex usa-flex-wrap">
+            {% for other-agencies in site.other-agencies %}
+            <div id="small-agency" class="usa-width-one-half usa-width-tablet">
+                <img class="usa-media_block-img" src="{{ other-agencies.agency-logo }}" alt="agency logo" width="75">
+                <p style="font-size:125%;line-height:1;margin-bottom:.5em;margin-top:.5em;">{{ other-agencies.agency-name }}</p>
+                <p style="line-height:1;margin-bottom:.25em;margin-top:.5em;"><a href="{{ other-agencies.plan-link }}" aria-label="{{ other-agencies.aria-label }}" target="_blank">Agency Plans and Reports </a></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
