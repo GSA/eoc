@@ -1,0 +1,38 @@
+{% comment %}
+This appears at the bottom of the evidence-plans pages.
+{% endcomment %}
+
+{% assign other_agencies_data = site.data.additional-agencies | where: 'name', page.title | first %}
+
+{% if other_agencies_data %}
+<h2>{{other_agencies_data.title}}</h2>
+<div class="grid-container padding-left-0 padding-right-0">
+    <div class="usa-graphic-list__row grid-row grid-gap padding-top-0">
+        {% if other_agencies_data.collection %}
+            {% assign other_agencies = site.collections | where: 'label', other_agencies_data.collection | first  %}
+            {% for other_agencies in other_agencies.docs %} 
+            <div class="tablet:grid-col-6 container margin-bottom-4">
+                <div class="">
+                    <div class="grid-row">
+                        <div class="tablet:grid-col-4">
+                            <img class="usa-media_block-img agency-txt-logo padding-right-1" src="{{site.baseurl}}/{{ other_agencies.agency-logo }}" alt="{{ other_agencies.alt }}">
+                        </div>
+                        <div class="tablet:grid-col-8 margin-top-neg-2">
+                            <p class="eval-pol-agcy-title">{{ other_agencies.agency-name }}</p>
+                            {% if other_agencies.learning-agenda %}
+                            <p class="eval-pol-agcy-link"><a href="{{ other_agencies.learning-agenda }}" aria-label="{{ other_agencies.agency-name }} Evaluation Plan (opens in a new window)" target="_blank">Learning Agenda</a></p>
+                            {% endif %}
+                            {% if other_agencies.plan-link %}
+                            <p class="eval-pol-agcy-link"><a href="{{ other_agencies.plan-link }}" aria-label="{{ other_agencies.aria-label }} (opens in a new window)"target="_blank">Evaluation Policy</a></p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endif %}

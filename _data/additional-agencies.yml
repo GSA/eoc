@@ -1,0 +1,9 @@
+# we create a simple array of options which are now being used in the _layout/evidence-plans-footer.html file. 
+# This data will be used to add a delimiter, a title, and additional agencies  on the bottom of the pages in "evidence plans"
+- name: Evaluation Policies
+  title: Other Agencies
+  collection: other-agencies 
+
+- name: Learning Agendas
+  title: Cross-Government Plans
+  collection: cross-government

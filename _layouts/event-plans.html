@@ -70,6 +70,7 @@ This is used in blog posts. The index page can be found at blog/index.html
                 {% endfor %}
             </div>
         </div>
+        {% include additional-agencies.html %}
 
         {% endif %}
 
@@ -188,28 +189,8 @@ This is used in blog posts. The index page can be found at blog/index.html
                 {% endfor %}
             </div>
         </div>
-        <h2>Other Agencies</h2>
-        <div class="grid-container padding-left-0 padding-right-0">
-            <div class="usa-graphic-list__row grid-row grid-gap padding-top-0">
-        {% for other-agencies in site.other-agencies %}
-        <div class="tablet:grid-col-6 container margin-bottom-4">
-            <div class="">
-                <div class="grid-row">
-                    <div class="tablet:grid-col-4">
-                        <img class="usa-media_block-img agency-txt-logo padding-right-1" src="{{site.baseurl}}/{{ other-agencies.agency-logo }}" alt="{{ other-agencies.alt }}">
-                    </div>
-                    <div class="tablet:grid-col-8 margin-top-neg-2">
-                        <p class="eval-pol-agcy-title">{{ other-agencies.agency-name }}</p>
-                        <p class="eval-pol-agcy-link"><a href="{{ other-agencies.plan-link }}" aria-label="{{ other-agencies.aria-label }} (opens in a new window)"target="_blank">Evaluation Policy</a></p>
-                    </div>
 
-                </div>
-            </div>
-            </a>
-        </div>
-        {% endfor %}
-            </div>
-        </div>
+        {% include additional-agencies.html %}
 
         {% endif %}
 
