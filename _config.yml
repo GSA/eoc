@@ -155,20 +155,24 @@ primary_navigation:
     children:
       - name: Summary
         url: "/evidence-plans/summary/"
-      - name: Learning Agenda
+      - name: Learning Agendas
         url: "/evidence-plans/learning-agenda/"
       - name: Capacity Assessments
         url: "/evidence-plans/capacity-assessments/"
       - name: Annual Evaluation Plans
         url: "/evidence-plans/annual-evaluation-plan/"
-      - name: Evaluation Policy
+      - name: Evaluation Policies
         url: "/evidence-plans/evaluation-policies/"
   - name: Resources
     url: /resources/
   - name: News
     url: /news/
   - name: FAQs
-    url: /faqs/  
+    url: /faqs/
+  - name: Explore
+    children:
+      - name: Learning Agenda Questions Dashboard
+        url: "/learning-agenda-questions-dashboard/"
 
 
 # Search.gov configuration

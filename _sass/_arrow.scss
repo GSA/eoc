@@ -1,0 +1,19 @@
+.usa-link--external-white::after {
+    background-image: url("../assets/images/launch--white.png");
+    background-position: 50% 60%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    content: "";
+    display: inline;
+    margin-left: 5px;
+    padding-left: 0.65em;
+}
+
+.usa-link--external-white:hover::after {
+    background-image: url("../assets/images/launch--white.png"), linear-gradient(transparent, transparent);
+    background-repeat: no-repeat;
+}
+
+.usa-link--external-white {
+    color: white !important;
+}
