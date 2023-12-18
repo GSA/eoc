@@ -165,7 +165,12 @@ html {
 .circle-card {
   height: auto;
   border-radius: 50%;
+
+  @media only screen and (max-width: 768px) {
+    max-width: 33%;
+  }
 }
+
 .agency-border-top {
   border-top:0.5rem solid #0d7ea2;
 }
@@ -774,23 +779,52 @@ blockquote p {
   border-radius: 0.7rem;
 }
 .circle-evaluation-card {
-    width: 10rem;
-    border-radius: 50%;
-    background: linear-gradient(52deg, #162e51 25%, #28a0cb 100%);
-
-    @media only screen and (max-width: 640px) {
-        width: 40rem;
-    }
+  width: 10rem;
+  border-radius: 50%;
+  background: linear-gradient(52deg, #162e51 25%, #28a0cb 100%);
 }
 @media only screen and (max-width: 639px) {
-    .title {
-        margin-top: 1.1rem;
-    }
+  .title {
+      margin-top: 1.1rem;
+  }
 }
-.evaluation-width{
-    width:180px;
-    margin:auto;
+
+@media only screen and (min-width: 640px) {
+  .toolkit-text {
+    text-align: left;
+  }
+
+  .toolkit-padding {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
+
+.toolkit-hero {
+  padding: 40px;
+  border-radius: 30px;
+  color: #fff;
+  padding-bottom: 20px;
+  background-color: #082643;
+
+  @media only screen and (max-width: 639px) {
+    text-align: center;
+  }
+
+  .circle-evaluation-card {
+    background: unset;
+  }
+}
+
+.toolkit-button:visited {
+  color:#005ea2;
+}
+
+.toolkit-button::after {
+  content: '>>';
+  margin-left: 0.5em;
+}
+
 .resource-category {
   color: #5b616b;
   border-top: 0.15rem solid #5b616b;
