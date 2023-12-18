@@ -325,7 +325,16 @@ html {
     }
 }
 
-    .padding-keyword {
-        padding-left: 35px;
-        padding-right: 35px;
-    }
+.padding-keyword {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.beta-tag {
+  padding: 0px 10px; 
+  font-size: 25px;
+  vertical-align: super; 
+  font-weight: normal;
+}
+
+
