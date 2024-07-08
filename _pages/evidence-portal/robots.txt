@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: http://localhost:9000/preview/gsa/eoc/feature/OMB-1-Testing/evidence-portal/sitemap-index.xml
+Host: localhost:9000
