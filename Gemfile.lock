@@ -90,7 +90,7 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     redcarpet (3.6.0)
-    rexml (3.3.1)
+    rexml (3.3.6)
       strscan
     rouge (4.3.0)
     safe_yaml (1.0.5)
@@ -110,7 +110,6 @@ GEM
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
     unicode-display_width (2.5.0)
-    wdm (0.1.1)
     webrick (1.8.1)
     yell (2.2.2)
 
@@ -131,7 +130,6 @@ DEPENDENCIES
   kramdown-parser-gfm (~> 1.1.0)
   sprockets (~> 3.7)
   tzinfo-data
-  wdm (~> 0.1.0)
   webrick
 
 RUBY VERSION
