@@ -14,7 +14,7 @@ def clean_xml(xml_string):
     soup = BeautifulSoup(xml_string, "lxml")
     cleaned_xml = str(soup)
     return ET.ElementTree(ET.fromstring(cleaned_xml)).getroot()
-
+ 
 def clean_url(url):
     parsed = urllib.parse.urlsplit(url)
     safe_path = urllib.parse.quote(parsed.path, safe="/")
