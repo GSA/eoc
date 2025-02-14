@@ -62,6 +62,10 @@
                                                 <!--{% if resource.filters contains 'portal-opportunities' %}
                                                 <span class="card-tag">Portal Opportunities</span>
                                                 {% endif %}-->
+
+                                                {% if resource.filters contains 'historical' %}
+                                                <span class="historical-label">Historical</span>
+                                                {% endif %}
                                          
                                                 {% if resource.external_url %}
                                                 <a class="anchor-fill text-ink text-no-underline" href="http://{{ resource.external_url }}" aria-label="{{ resource.aria-label }} link (opens in a new window)" target="_blank">

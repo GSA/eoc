@@ -4,6 +4,7 @@
     <a class="usa-button btn-primary margin-bottom-2" href="{{ site.baseurl }}/resources/#subject=*&role=*&status=*">Reset Filter</a>
 
     <nav id="filter" class="filters" aria-label="filter menu">
+    
         <h2 class="filter-title font-sans-sm">Filter by Resource Type</h2>
         <ul class="filter-list" data-filter-group="resource">
             <li><a aria-label="Filter by Type: Legislation" role="checkbox" href="javascript:void(0)" data-filter=".legislation" class="usa-tooltip" data-position="right" title="Relevant law" tabindex="0">Legislation</a></li>
@@ -53,6 +54,22 @@
             <li><a aria-label="Filter by Type: 2023" role="checkbox" href="javascript:void(0)" data-filter=".2023">2023</a></li>
             <li><a aria-label="Filter by Type: 2024" role="checkbox" href="javascript:void(0)" data-filter=".2024">2024</a></li>
             <li><a aria-label="Filter by Type: 2025" role="checkbox" href="javascript:void(0)" data-filter=".2025">2025</a></li>
+        </ul>
+
+        <h2 class="filter-title font-sans-sm">Filter by Historical</h2>
+        <ul class="filter-list" data-filter-group="historical">
+            <li>
+                <a aria-label="Filter by Historical Documents" 
+                   role="checkbox" 
+                   href="javascript:void(0)" 
+                   data-filter="*" 
+                   class="usa-tooltip" 
+                   id="filter-list-historical" 
+                   data-position="right" 
+                   title="Show Historical Documents">
+                   Show Historical Documents
+                </a>
+            </li>
         </ul>
     </nav>
 </div>
