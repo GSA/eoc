@@ -1,5 +1,5 @@
 ---
-agency-name: Department of Treasury
+agency-name: Department of the Treasury
 agency-link: https://home.treasury.gov/
 agency-logo: assets/images/agency-seals/treasury_department_seal.png
 layout: agency
