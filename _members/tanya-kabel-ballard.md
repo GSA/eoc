@@ -4,5 +4,5 @@ bio-image-alt-text: Department of State
 layout: bio
 name: Tanya Kabel-Ballard
 department: Department of State
-job-title: Evaluation Officers
+job-title: Evaluation Officer
 ---
