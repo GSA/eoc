@@ -101,12 +101,12 @@ permalink: /faqs/
            <li>Department of Health and Human Services</li>
            <li>Department of Homeland Security</li>
            <li>Department of Housing and Urban Development</li>
-           <li>Department of Interior</li>
+           <li>Department of the Interior</li>
            <li>Department of Justice</li>
            <li>Department of Labor</li>
            <li>Department of State</li>
            <li>Department of Transportation</li>
-           <li>Department of Treasury</li>
+           <li>Department of the Treasury</li>
            <li>Department of Veterans Affairs</li>
            <li>Environmental Protection Agency</li>
            <li>National Aeronautics and Space Administration</li>
