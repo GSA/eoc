@@ -3,4 +3,17 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/evidenceportal/styles.css" />
   <link href="{{ site.baseurl }}/assets/css/tom-select.css" rel="stylesheet" />
   <!-- Add any other common head elements here -->
+
+  <title>
+    {% case page.url %} {% when '/evidenceportal/' %}Open Projects {% when
+    '/evidenceportal/ongoing/' %}In-Progress Projects {% when
+    '/evidenceportal/completed/' %}Completed Projects {% when
+    '/evidenceportal/about/' %}About {% when '/evidenceportal/contact_us/'
+    %}Contact Us {% else %}Evidence Portal {% endcase %}
+  </title>
+  <link
+    rel="icon"
+    href="/evidenceportal/favicon-32x32.png?v=9b0681ab59b6b530813911ac18656a96"
+    type="image/png"
+  />
 </head>

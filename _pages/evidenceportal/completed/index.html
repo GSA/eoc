@@ -216,10 +216,12 @@ page_title: Completed Projects
                     {{item.question}}
                   </div>
                   <div>
+                    {% if item.endDate !="" %}
                     <div class="mt-4 text-body">
-                      <span class="font-bold">Opportunity Closes: </span
-                      ><span>{{item.opportunityCloses}}</span>
+                      <span class="font-bold">Project Ended: </span>
+                      <span>{{ item.endDate | date: "%B %d, %Y" }}</span>
                     </div>
+                    {% endif %}
                     <div class="mb-4 text-body agency">
                       <span class="font-bold">Lead Agency: </span
                       >{{item.agency}}
