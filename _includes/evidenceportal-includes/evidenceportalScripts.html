@@ -1,713 +1,15 @@
 <script src="{{ site.baseurl }}/assets/js/tom-select.complete.min.js"></script>
-<!-- <script type="text/javascript">
-  let selectedAgency = "";
-  let selectedTopics = [];
-  let selectedDateSort = "";
-
-  const topicList = [
-    { value: "Impact", agency: "National Institutes of Health" },
-    { value: "Metascience", agency: "National Institutes of Health" },
-    { value: "Evaluation", agency: "National Institutes of Health" },
-    { value: "Stewardship", agency: "National Institutes of Health" },
-    { value: "Housing", agency: "Department of the Treasury" },
-    {
-      value: "Workforce Development",
-      agency: "Department of the Treasury",
-    },
-    {
-      value: "State and Local Governments",
-      agency: "Department of the Treasury",
-    },
-  ];
-
-  const agencySelect = new TomSelect("#agencySelect", {
-    create: false,
-    allowEmptyOption: true,
-    onChange: (value) => {
-      selectedAgency = value || "";
-      if (selectedAgency) {
-        updateTopicsByAgency(selectedAgency);
-      } else {
-        resetTopics();
-      }
-      filterArticles();
-    },
-  });
-
-  const topicSelect = new TomSelect("#topicSelect", {
-    plugins: ["remove_button"],
-    create: false,
-    persist: false,
-    onChange: (values) => {
-      selectedTopics = values || [];
-
-      if (selectedTopics.length > 0) {
-        const topicAgency = topicList.find(
-          (t) => t.value === selectedTopics[0]
-        ).agency;
-        selectedAgency = topicAgency;
-
-        updateAgencyDropdown(topicAgency); // Update agency dropdown options
-        updateTopicsByAgency(topicAgency); // Update topic options
-      } else {
-        resetAgency();
-        resetTopics();
-        selectedAgency = "";
-      }
-
-      filterArticles();
-    },
-  });
-
-  const dateSelect = new TomSelect("#dateSelect", {
-    create: false,
-    allowEmptyOption: true,
-    onChange: (value) => {
-      selectedDateSort = value || "";
-      filterArticles();
-    },
-  });
-
-  document
-    .getElementById("projSearch")
-    .addEventListener("input", filterArticles);
-
-  document.getElementById("clearFilters").addEventListener("click", () => {
-    selectedDateSort = "";
-    selectedAgency = "";
-    selectedTopics = [];
-
-    dateSelect.clear(true);
-    agencySelect.clear(true);
-    topicSelect.clear(true);
-
-    resetAgency();
-    resetTopics();
-
-    document.getElementById("projSearch").value = "";
-
-    filterArticles();
-  });
-
-  function updateTopicsByAgency(agency) {
-    topicSelect.clearOptions();
-
-    topicList.forEach((topic) => {
-      if (topic.agency === agency) {
-        topicSelect.addOption({ value: topic.value, text: topic.value });
-      }
-    });
-
-    topicSelect.refreshOptions(false);
-  }
-
-  function resetTopics() {
-    topicSelect.clearOptions();
-
-    topicList.forEach((topic) => {
-      topicSelect.addOption({ value: topic.value, text: topic.value });
-    });
-
-    topicSelect.refreshOptions(false);
-  }
-
-  function updateAgencyDropdown(agency) {
-    agencySelect.clearOptions();
-
-    agencySelect.addOption({ value: agency, text: agency });
-
-    agencySelect.refreshOptions(false);
-    agencySelect.setValue(agency, true);
-  }
-
-  function resetAgency() {
-    agencySelect.clearOptions();
-
-    const agencies = [...new Set(topicList.map((t) => t.agency))];
-
-    agencies.forEach((agency) => {
-      agencySelect.addOption({ value: agency, text: agency });
-    });
-
-    agencySelect.refreshOptions(false);
-  }
-
-  function filterArticles() {
-    const searchText = document
-      .getElementById("projSearch")
-      .value.trim()
-      .toLowerCase();
-
-    const articles = document.querySelectorAll("article");
-
-    articles.forEach((article) => {
-      let textContent = article.textContent.replace(/\s+/g, " ").toLowerCase();
-      let agency = (article.dataset.agency || "").toLowerCase();
-      let topicsJson = article.dataset.topic || "[]";
-      let topicsArray = [];
-
-      try {
-        topicsArray = JSON.parse(topicsJson).map((topic) =>
-          topic.toLowerCase()
-        );
-      } catch (e) {
-        console.error("Error parsing topics JSON:", topicsJson);
-      }
-
-      const matchSearch = searchText === "" || textContent.includes(searchText);
-      const matchAgency =
-        selectedAgency === "" || agency.includes(selectedAgency.toLowerCase());
-      const matchTopics =
-        selectedTopics.length === 0 ||
-        selectedTopics.some((topic) =>
-          topicsArray.includes(topic.toLowerCase())
-        );
-
-      if (matchSearch && matchAgency && matchTopics) {
-        article.style.display = "block";
-      } else {
-        article.style.display = "none";
-      }
-    });
-  }
-
-  // On load, show all agency options
-  resetAgency();
-  resetTopics();
-</script> -->
-
-<!--New common js-->
-<!-- <script>
-  function initFilters({ topics, dateOptions = [] }) {
-    let selectedAgency = "";
-    let selectedTopics = [];
-    let selectedDateSort = "";
-
-    const agencies = [...new Set(topics.map((t) => t.agency))];
-
-    const agencySelect = new TomSelect("#agencySelect", {
-      create: false,
-      allowEmptyOption: true,
-      onChange: (value) => {
-        selectedAgency = value || "";
-        if (selectedAgency) {
-          updateTopicsByAgency(selectedAgency);
-        } else {
-          resetTopics();
-        }
-        filterArticles();
-      },
-    });
-
-    const topicSelect = new TomSelect("#topicSelect", {
-      plugins: ["remove_button"],
-      create: false,
-      persist: false,
-      onChange: (values) => {
-        selectedTopics = values || [];
-        if (selectedTopics.length > 0) {
-          const topicAgency = topics.find(
-            (t) => t.value === selectedTopics[0]
-          )?.agency;
-          selectedAgency = topicAgency;
-          updateAgencyDropdown(topicAgency);
-          updateTopicsByAgency(topicAgency);
-        } else {
-          resetAgency();
-          resetTopics();
-          selectedAgency = "";
-        }
-        filterArticles();
-      },
-    });
-
-    const dateSelect = new TomSelect("#dateSelect", {
-      create: false,
-      allowEmptyOption: true,
-      options: dateOptions.map((d) => ({ value: d, text: d })),
-      onChange: (value) => {
-        selectedDateSort = value || "";
-        filterArticles();
-      },
-    });
-
-    document
-      .getElementById("projSearch")
-      ?.addEventListener("input", filterArticles);
-
-    document.getElementById("clearFilters")?.addEventListener("click", () => {
-      selectedDateSort = "";
-      selectedAgency = "";
-      selectedTopics = [];
-      dateSelect.clear(true);
-      agencySelect.clear(true);
-      topicSelect.clear(true);
-      resetAgency();
-      resetTopics();
-      document.getElementById("projSearch").value = "";
-      filterArticles();
-    });
-
-    function updateTopicsByAgency(agency) {
-      topicSelect.clearOptions();
-      topics
-        .filter((t) => t.agency === agency)
-        .forEach((topic) => {
-          topicSelect.addOption({ value: topic.value, text: topic.value });
-        });
-      topicSelect.refreshOptions(false);
-    }
-
-    function resetTopics() {
-      topicSelect.clearOptions();
-      topics.forEach((topic) => {
-        topicSelect.addOption({ value: topic.value, text: topic.value });
-      });
-      topicSelect.refreshOptions(false);
-    }
-
-    function updateAgencyDropdown(agency) {
-      agencySelect.clearOptions();
-      agencySelect.addOption({ value: agency, text: agency });
-      agencySelect.refreshOptions(false);
-      agencySelect.setValue(agency, true);
-    }
-
-    function resetAgency() {
-      agencySelect.clearOptions();
-      agencies.forEach((a) => agencySelect.addOption({ value: a, text: a }));
-      agencySelect.refreshOptions(false);
-    }
-
-    function filterArticles() {
-      const searchText = document
-        .getElementById("projSearch")
-        .value.trim()
-        .toLowerCase();
-      const articles = document.querySelectorAll("article");
-      articles.forEach((article) => {
-        let textContent = article.textContent
-          .replace(/\s+/g, " ")
-          .toLowerCase();
-        let agency = (article.dataset.agency || "").toLowerCase();
-        let topicsJson = article.dataset.topic || "[]";
-        let topicsArray = [];
-        try {
-          topicsArray = JSON.parse(topicsJson).map((t) => t.toLowerCase());
-        } catch (e) {
-          console.error("Invalid topic JSON:", topicsJson);
-        }
-
-        const matchSearch =
-          searchText === "" || textContent.includes(searchText);
-        const matchAgency =
-          selectedAgency === "" ||
-          agency.includes(selectedAgency.toLowerCase());
-        const matchTopics =
-          selectedTopics.length === 0 ||
-          selectedTopics.some((t) => topicsArray.includes(t.toLowerCase()));
-
-        article.style.display =
-          matchSearch && matchAgency && matchTopics ? "block" : "none";
-      });
-    }
-
-    // Initialize
-    resetAgency();
-    resetTopics();
-  }
-</script> -->
-
-<!--CORRECT JS-->
-<!-- <script>
-  function initFilters({ topics, dateOptions = [] }) {
-    let selectedAgency = "";
-    let selectedTopics = [];
-    let selectedDateSort = "";
-
-    // Collect all agencies
-    const agencies = [...new Set(topics.map((t) => t.agency))];
-
-    // Map of topic to its associated agencies
-    const topicToAgencies = {};
-    topics.forEach((t) => {
-      if (!topicToAgencies[t.value]) topicToAgencies[t.value] = new Set();
-      topicToAgencies[t.value].add(t.agency);
-    });
-
-    const agencySelect = new TomSelect("#agencySelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
-      create: false,
-      allowEmptyOption: true,
-      onChange: (value) => {
-        selectedAgency = value || "";
-        if (selectedAgency) {
-          updateTopicsByAgency(selectedAgency);
-        } else {
-          resetTopics();
-        }
-        filterArticles();
-      },
-    });
-
-    const topicSelect = new TomSelect("#topicSelect", {
-      plugins: ["remove_button"],
-      create: false,
-      persist: false,
-      onChange: (values) => {
-        selectedTopics = values || [];
-
-        if (selectedTopics.length > 0) {
-          // Get union of agencies for all selected topics
-          const validAgencies = new Set();
-          selectedTopics.forEach((topic) => {
-            topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
-          });
-
-          updateAgencyDropdown([...validAgencies]);
-        } else {
-          resetAgency();
-        }
-
-        filterArticles();
-      },
-    });
-
-    const dateSelect = new TomSelect("#dateSelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
-      create: false,
-      allowEmptyOption: true,
-      options: dateOptions.map((d) => ({ value: d, text: d })),
-      onChange: (value) => {
-        selectedDateSort = value || "";
-        filterArticles();
-      },
-    });
-
-    document
-      .getElementById("projSearch")
-      ?.addEventListener("input", filterArticles);
-
-    document.getElementById("clearFilters")?.addEventListener("click", () => {
-      selectedDateSort = "";
-      selectedAgency = "";
-      selectedTopics = [];
-      dateSelect.clear(true);
-      agencySelect.clear(true);
-      topicSelect.clear(true);
-      resetAgency();
-      resetTopics();
-      document.getElementById("projSearch").value = "";
-      filterArticles();
-    });
-
-    function updateTopicsByAgency(agency) {
-      topicSelect.clearOptions();
-      topics
-        .filter((t) => t.agency === agency)
-        .forEach((topic) => {
-          topicSelect.addOption({ value: topic.value, text: topic.value });
-        });
-      topicSelect.refreshOptions(false);
-    }
-
-    function resetTopics() {
-      topicSelect.clearOptions();
-      topics.forEach((topic) => {
-        topicSelect.addOption({ value: topic.value, text: topic.value });
-      });
-      topicSelect.refreshOptions(false);
-    }
-
-    function updateAgencyDropdown(agencyList) {
-      agencySelect.clearOptions();
-      agencyList.forEach((a) => {
-        agencySelect.addOption({ value: a, text: a });
-      });
-      agencySelect.refreshOptions(false);
-
-      if (
-        agencyList.length === 1 &&
-        (!selectedAgency || agencyList[0] !== selectedAgency)
-      ) {
-        agencySelect.setValue(agencyList[0], true);
-        selectedAgency = agencyList[0];
-        updateTopicsByAgency(selectedAgency);
-      }
-    }
-
-    function resetAgency() {
-      agencySelect.clearOptions();
-      agencies.forEach((a) => agencySelect.addOption({ value: a, text: a }));
-      agencySelect.refreshOptions(false);
-    }
-
-    function filterArticles() {
-      const searchText = document
-        .getElementById("projSearch")
-        .value.trim()
-        .toLowerCase();
-      const articles = document.querySelectorAll("article");
-
-      articles.forEach((article) => {
-        let textContent = article.textContent
-          .replace(/\s+/g, " ")
-          .toLowerCase();
-        let agency = (article.dataset.agency || "").toLowerCase();
-        let topicsJson = article.dataset.topic || "[]";
-        let topicsArray = [];
-        try {
-          topicsArray = JSON.parse(topicsJson).map((t) => t.toLowerCase());
-        } catch (e) {
-          console.error("Invalid topic JSON:", topicsJson);
-        }
-
-        const matchSearch =
-          searchText === "" || textContent.includes(searchText);
-        const matchAgency =
-          selectedAgency === "" ||
-          agency.includes(selectedAgency.toLowerCase());
-        const matchTopics =
-          selectedTopics.length === 0 ||
-          selectedTopics.some((t) => topicsArray.includes(t.toLowerCase()));
-
-        article.style.display =
-          matchSearch && matchAgency && matchTopics ? "block" : "none";
-      });
-    }
-
-    // Init on load
-    resetAgency();
-    resetTopics();
-  }
-</script> -->
-
-<!--Today;s JS approved by Leticia with only clear all issue-->
-<!-- <script>
-  function initFilters({ topics, dateOptions = [] }) {
-    let selectedAgency = "";
-    let selectedTopics = [];
-    let selectedDateSort = "";
-
-    const agencies = [...new Set(topics.map((t) => t.agency))];
-
-    const topicToAgencies = {};
-    topics.forEach((t) => {
-      if (!topicToAgencies[t.value]) topicToAgencies[t.value] = new Set();
-      topicToAgencies[t.value].add(t.agency);
-    });
-
-    const agencySelect = new TomSelect("#agencySelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
-      create: false,
-      allowEmptyOption: true,
-      onChange: (value) => {
-        selectedAgency = value || "";
-        if (selectedAgency) {
-          updateTopicsByAgency(selectedAgency);
-        } else {
-          if (selectedTopics.length > 0) {
-            const validAgencies = new Set();
-            selectedTopics.forEach((topic) => {
-              topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
-            });
-            updateTopicsByAgencyList([...validAgencies]);
-          } else {
-            resetTopics();
-          }
-        }
-        filterArticles();
-      },
-    });
-
-    const topicSelect = new TomSelect("#topicSelect", {
-      plugins: ["remove_button"],
-      create: false,
-      persist: false,
-      onChange: (values) => {
-        selectedTopics = values || [];
-
-        if (selectedTopics.length > 0) {
-          const validAgencies = new Set();
-          selectedTopics.forEach((topic) => {
-            topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
-          });
-
-          updateAgencyDropdown([...validAgencies]);
-        } else {
-          // NEW: Reset agency dropdown when all topics are deselected
-          selectedAgency = ""; // Clear selected agency state
-          agencySelect.clear(true); // Clear selected agency value
-          resetAgency(); // Reset agency options
-          resetTopics();
-        }
-
-        filterArticles();
-      },
-    });
-
-    const dateSelect = new TomSelect("#dateSelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
-      create: false,
-      allowEmptyOption: true,
-      options: dateOptions.map((d) => ({ value: d, text: d })),
-      onChange: (value) => {
-        selectedDateSort = value || "";
-        filterArticles();
-      },
-    });
-
-    document
-      .getElementById("projSearch")
-      ?.addEventListener("input", filterArticles);
-
-    document.getElementById("clearFilters")?.addEventListener("click", () => {
-      agencySelect.blur();
-      dateSelect.blur();
-      topicSelect.blur();
-
-      // 🔍 Manually adjust input field width so TomSelect doesn't glitch
-      document.querySelectorAll(".ts-control input").forEach((input) => {
-        input.style.minWidth = "1px";
-        input.style.flex = "1 1 auto";
-        input.style.maxWidth = "100%";
-      });
-
-      // 🕒 Wait a tiny bit to let TomSelect settle internally
-      setTimeout(() => {
-        selectedDateSort = "";
-        selectedAgency = "";
-        selectedTopics = [];
-
-        topicSelect.clear(true);
-        document.getElementById("projSearch").value = "";
-
-        resetAgency();
-        resetTopics();
-
-        // Explicitly clear dropdown selections
-        agencySelect.setValue("");
-        dateSelect.setValue("");
-
-        agencySelect.refreshOptions(false);
-        dateSelect.refreshOptions(false);
-
-        filterArticles();
-      }, 10);
-    });
-
-    function updateTopicsByAgency(agency) {
-      topicSelect.clearOptions();
-      topics
-        .filter((t) => t.agency === agency)
-        .forEach((topic) => {
-          topicSelect.addOption({ value: topic.value, text: topic.value });
-        });
-      topicSelect.refreshOptions(false);
-    }
-
-    function resetTopics() {
-      topicSelect.clearOptions();
-      topics.forEach((topic) => {
-        topicSelect.addOption({ value: topic.value, text: topic.value });
-      });
-      topicSelect.refreshOptions(false);
-    }
-
-    function updateAgencyDropdown(agencyList) {
-      agencySelect.clearOptions();
-
-      if (agencyList.length === 0) {
-        resetAgency(); // ✅ Defensive fallback
-
-        return;
-      }
-
-      agencyList.forEach((a) => {
-        agencySelect.addOption({ value: a, text: a });
-      });
-      agencySelect.refreshOptions(false);
-
-      if (
-        agencyList.length === 1 &&
-        (!selectedAgency || agencyList[0] !== selectedAgency)
-      ) {
-        agencySelect.setValue(agencyList[0], true);
-        selectedAgency = agencyList[0];
-        updateTopicsByAgency(selectedAgency);
-      }
-    }
-
-    function resetAgency() {
-      agencySelect.clearOptions();
-      agencies.forEach((a) => agencySelect.addOption({ value: a, text: a }));
-      agencySelect.refreshOptions(false);
-    }
-
-    function filterArticles() {
-      const searchText = document
-        .getElementById("projSearch")
-        .value.trim()
-        .toLowerCase();
-      const articles = document.querySelectorAll("article");
-
-      articles.forEach((article) => {
-        let textContent = article.textContent
-          .replace(/\s+/g, " ")
-          .toLowerCase();
-        let agency = (article.dataset.agency || "").toLowerCase();
-        let topicsJson = article.dataset.topic || "[]";
-        let topicsArray = [];
-        try {
-          topicsArray = JSON.parse(topicsJson).map((t) => t.toLowerCase());
-        } catch (e) {
-          console.error("Invalid topic JSON:", topicsJson);
-        }
-
-        const matchSearch =
-          searchText === "" || textContent.includes(searchText);
-        const matchAgency =
-          selectedAgency === "" ||
-          agency.includes(selectedAgency.toLowerCase());
-        const matchTopics =
-          selectedTopics.length === 0 ||
-          selectedTopics.some((t) => topicsArray.includes(t.toLowerCase()));
-
-        article.style.display =
-          matchSearch && matchAgency && matchTopics ? "block" : "none";
-      });
-    }
-
-    // Init on load
-    resetAgency();
-    resetTopics();
-  }
-</script> -->
-
 <script>
-  function initFilters({ topics, dateOptions = [] }) {
+  function initFilters({
+    topics,
+    dateOptions = [],
+    defaultDateOption = "Opportunity Start Date: Newest to Oldest",
+  }) {
     let selectedAgency = "";
     let selectedTopics = [];
-    let selectedDateSort = "";
+    let selectedDateSort = defaultDateOption;
 
     const agencies = [...new Set(topics.map((t) => t.agency))];
-
     const topicToAgencies = {};
     topics.forEach((t) => {
       if (!topicToAgencies[t.value]) topicToAgencies[t.value] = new Set();
@@ -718,30 +20,19 @@
       const wrapper = selectInstance.wrapper;
       const input = wrapper.querySelector(".ts-control input");
       if (input) {
-        if (shrink) {
-          input.style.minWidth = "1px";
-          input.style.flex = "1 1 auto";
-          input.style.maxWidth = "100%";
-        } else {
-          input.style.minWidth = "";
-          input.style.flex = "";
-          input.style.maxWidth = "";
-        }
+        input.style.minWidth = shrink ? "1px" : "";
+        input.style.flex = shrink ? "1 1 auto" : "";
+        input.style.maxWidth = shrink ? "100%" : "";
       }
     }
 
     const agencySelect = new TomSelect("#agencySelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
+      plugins: { clear_button: { title: "Remove all selected options" } },
       create: false,
       allowEmptyOption: true,
       onChange: (value) => {
         selectedAgency = value || "";
         adjustTomSelectInputWidth(agencySelect, !!value);
-
         if (selectedAgency) {
           updateTopicsByAgency(selectedAgency);
         } else {
@@ -750,7 +41,7 @@
             selectedTopics.forEach((topic) => {
               topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
             });
-            updateTopicsByAgencyList([...validAgencies]);
+            updateAgencyDropdown([...validAgencies]);
           } else {
             resetTopics();
           }
@@ -766,7 +57,6 @@
       onChange: (values) => {
         selectedTopics = values || [];
         adjustTomSelectInputWidth(topicSelect, selectedTopics.length > 0);
-
         if (selectedTopics.length > 0) {
           const validAgencies = new Set();
           selectedTopics.forEach((topic) => {
@@ -779,22 +69,18 @@
           resetAgency();
           resetTopics();
         }
-
         filterArticles();
       },
     });
 
     const dateSelect = new TomSelect("#dateSelect", {
-      plugins: {
-        clear_button: {
-          title: "Remove all selected options",
-        },
-      },
+      plugins: { clear_button: { title: "Remove all selected options" } },
       create: false,
       allowEmptyOption: true,
       options: dateOptions.map((d) => ({ value: d, text: d })),
+      items: [defaultDateOption],
       onChange: (value) => {
-        selectedDateSort = value || "";
+        selectedDateSort = value || defaultDateOption;
         adjustTomSelectInputWidth(dateSelect, !!value);
         filterArticles();
       },
@@ -805,12 +91,9 @@
       ?.addEventListener("input", filterArticles);
 
     document.getElementById("clearFilters")?.addEventListener("click", () => {
-      // Blur to finalize selections
       document.activeElement?.blur();
-
-      // Wait a tick to let TomSelect commit changes
       setTimeout(() => {
-        selectedDateSort = "";
+        selectedDateSort = defaultDateOption;
         selectedAgency = "";
         selectedTopics = [];
 
@@ -821,12 +104,11 @@
         resetTopics();
 
         agencySelect.setValue("");
-        dateSelect.setValue("");
+        dateSelect.setValue(defaultDateOption);
 
         agencySelect.refreshOptions(false);
         dateSelect.refreshOptions(false);
 
-        // Reset input widths
         adjustTomSelectInputWidth(agencySelect, false);
         adjustTomSelectInputWidth(dateSelect, false);
         adjustTomSelectInputWidth(topicSelect, false);
@@ -855,12 +137,10 @@
 
     function updateAgencyDropdown(agencyList) {
       agencySelect.clearOptions();
-
       if (agencyList.length === 0) {
         resetAgency();
         return;
       }
-
       agencyList.forEach((a) => {
         agencySelect.addOption({ value: a, text: a });
       });
@@ -887,22 +167,20 @@
         .getElementById("projSearch")
         .value.trim()
         .toLowerCase();
-      const articles = document.querySelectorAll("article");
+      const articles = Array.from(document.querySelectorAll("article"));
 
-      articles.forEach((article) => {
-        let textContent = article.textContent
+      const visibleArticles = articles.filter((article) => {
+        const textContent = article.textContent
           .replace(/\s+/g, " ")
           .toLowerCase();
-        let agency = (article.dataset.agency || "").toLowerCase();
-        let topicsJson = article.dataset.topic || "[]";
+        const agency = (article.dataset.agency || "").toLowerCase();
+        const topicsJson = article.dataset.topic || "[]";
         let topicsArray = [];
-
         try {
           topicsArray = JSON.parse(topicsJson).map((t) => t.toLowerCase());
         } catch (e) {
           console.error("Invalid topic JSON:", topicsJson);
         }
-
         const matchSearch =
           searchText === "" || textContent.includes(searchText);
         const matchAgency =
@@ -911,20 +189,83 @@
         const matchTopics =
           selectedTopics.length === 0 ||
           selectedTopics.some((t) => topicsArray.includes(t.toLowerCase()));
-
-        article.style.display =
-          matchSearch && matchAgency && matchTopics ? "block" : "none";
+        return matchSearch && matchAgency && matchTopics;
       });
+
+      // Determine sort key
+      let sortKey = "startDate";
+      if (
+        selectedDateSort.toLowerCase().includes("ended") ||
+        selectedDateSort.toLowerCase().includes("completed")
+      ) {
+        sortKey = "endDate";
+      }
+      console.log(sortKey, "key");
+      const isOldestToNewest =
+        selectedDateSort === "Project Ended:Oldest to Newest" ||
+        selectedDateSort === "Project Started:Oldest to Newest";
+      console.log(isOldestToNewest, "isOldestToNewest");
+      visibleArticles.sort((a, b) => {
+        const rawDateA = a.dataset[sortKey];
+        const rawDateB = b.dataset[sortKey];
+        console.log(rawDateA, rawDateB, "raw dates");
+
+        const dateA = rawDateA ? new Date(rawDateA) : new Date("1900-01-01");
+        const dateB = rawDateB ? new Date(rawDateB) : new Date("1900-01-01");
+        console.log(dateA, dateB, "formatted dates");
+        const isValidA = !isNaN(dateA.getTime());
+        const isValidB = !isNaN(dateB.getTime());
+
+        if (!isValidA && !isValidB) return 0;
+        if (!isValidA) return isOldestToNewest ? 1 : -1;
+        if (!isValidB) return isOldestToNewest ? -1 : 1;
+
+        return isOldestToNewest ? dateA - dateB : dateB - dateA;
+      });
+
+      console.log(
+        "%cSorted Dates:",
+        "background: #222; color: #bada55; font-weight: bold;"
+      );
+      console.log(visibleArticles, "VA");
+      visibleArticles?.forEach((wrapper, i) => {
+        const article = wrapper.querySelector("article");
+        const date = article?.dataset[sortKey] || "N/A";
+        console.log(
+          `%c${i + 1}. ${date}`,
+          "background: #f0f0f0; color: #333; padding: 2px 6px;"
+        );
+      });
+      // Update DOM
+      const container = articles[0]?.parentNode;
+      if (container) {
+        // Clear container first to avoid weird append behavior
+        articles.forEach((article) => container.removeChild(article));
+
+        // Then append sorted + visible articles in order
+        visibleArticles.forEach((article) => {
+          article.style.display = "block";
+          container.appendChild(article);
+        });
+
+        // Hide the rest
+        const hiddenArticles = articles.filter(
+          (a) => !visibleArticles.includes(a)
+        );
+        hiddenArticles.forEach((article) => {
+          article.style.display = "none";
+          container.appendChild(article); // still re-add to preserve structure
+        });
+      }
     }
 
-    // 🔄 Init
+    // Init dropdowns
     resetAgency();
     resetTopics();
-
-    // 💡 Ensure clean layout at startup
     adjustTomSelectInputWidth(agencySelect, false);
     adjustTomSelectInputWidth(dateSelect, false);
     adjustTomSelectInputWidth(topicSelect, false);
+    filterArticles(); // Initial sort on load
   }
 </script>
 

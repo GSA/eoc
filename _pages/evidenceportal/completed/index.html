@@ -4,10 +4,7 @@ permalink: evidenceportal/completed/
 page_title: Completed Projects
 ---
 
-<html>
-  <!-- <head>
-    <link rel="stylesheet" href="{{site.baseurl}}/evidenceportal/styles.css" />
-  </head> -->
+<html lang="en">
   {% include evidenceportal-includes/head.html %}
   <body>
     {% include evidenceportal-includes/evidenceportalNavbar.html %}
@@ -63,37 +60,33 @@ page_title: Completed Projects
             <div class="flex-1 min-w-30ch">
               <div class="custom-select-container">
                 <label
-                  id="filter-select-label"
+                  id="filter-select-label-date"
                   class="font-bold p-1"
                   for="dateSelect"
                   >Filter by
                 </label>
-                <select id="dateSelect" placeholder="Select...">
-                  <option value="">Select...</option>
-                  <option value="Date Posted: Newest to Oldest">
-                    Date Posted: Newest to Oldest
-                  </option>
-                  <option value="Date Posted: Oldest to Newest">
-                    Date Posted: Oldest to Newest
-                  </option>
-                  <option value="Opportunity Closes: Newest to Oldest">
-                    Opportunity Closes: Newest to Oldest
-                  </option>
-                  <option value="Opportunity Closes: Oldest to Newest">
-                    Opportunity Closes: Oldest to Newest
-                  </option>
-                </select>
+                <select
+                  id="dateSelect"
+                  placeholder="Select..."
+                  aria-labelledby="filter-select-label-date"
+                  title="Select a date filter"
+                ></select>
               </div>
             </div>
             <div class="flex-1 min-w-30ch">
               <div class="custom-select-container">
                 <label
-                  id="filter-select-label"
+                  id="filter-select-label-agency"
                   class="font-bold p-1"
                   for="agencySelect"
                   >Filter by agency</label
                 >
-                <select id="agencySelect" placeholder="Select an agency...">
+                <select
+                  id="agencySelect"
+                  placeholder="Select an agency..."
+                  aria-labelledby="filter-select-label-agency"
+                  title="Select an agency"
+                >
                   <option value="">Select an agency...</option>
                   <option value="National Institutes of Health">
                     National Institutes of Health
@@ -107,7 +100,7 @@ page_title: Completed Projects
             <div class="flex-1 min-w-30ch">
               <div class="custom-select-container">
                 <label
-                  id="filter-select-label"
+                  id="filter-select-label-topic"
                   class="font-bold p-1"
                   for="topicSelect"
                   >Filter by topic</label
@@ -116,6 +109,8 @@ page_title: Completed Projects
                   id="topicSelect"
                   multiple
                   placeholder="Select topics..."
+                  aria-labelledby="filter-select-label-topic"
+                  title="Select one or more topics"
                 >
                   <option value="Impact" data-agency="National">Impact</option>
                   <option value="Metascience" data-agency="National">
@@ -186,8 +181,9 @@ page_title: Completed Projects
             <article
               data-agency="{{ item.agency }}"
               data-topic='{{ item.topics | map: "slug" | jsonify }}'
-              data-start-date="{{ item.startDate }}"
+              data-start-date="{{ item.endDate }}"
               data-end-date="{{ item.endDate }}"
+              data-page="completed"
             >
               <div
                 class="px-2 py-4 overflow-hidden bg-white border border-gray-200 rounded-md shadow-sm h-full flex flex-col"
@@ -332,15 +328,6 @@ page_title: Completed Projects
       </div>
     </div>
     {% include evidenceportal-includes/evidenceportalScripts.html %}
-    <!--  <script
-      type="text/javascript"
-      src="{{site.baseurl}}/evidenceportal/multiselect.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="{{site.baseurl}}/evidenceportal/singleSelect.js"
-    ></script> -->
-
     <script>
       initFilters({
         topics: [
@@ -382,6 +369,7 @@ page_title: Completed Projects
           "Project Ended:Newest to Oldest",
           "Project Ended:Oldest to Newest",
         ],
+        defaultDateOption: "Project Ended:Newest to Oldest",
       });
     </script>
   </body>

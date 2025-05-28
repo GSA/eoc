@@ -4,7 +4,7 @@ permalink: evidenceportal/
 page_title: Open Projects
 ---
 
-<html>
+<html lang="en">
   {% include evidenceportal-includes/head.html %}
   <body>
    {% include evidenceportal-includes/evidenceportalNavbar.html %}
@@ -65,25 +65,13 @@ page_title: Open Projects
              
               <div class="custom-select-container">
                 <label
-                id="filter-select-label"
+                id="filter-select-label-date"
                 class="font-bold p-1"
                 for="dateSelect"
                 >Filter by
               </label>
-                <select id="dateSelect" placeholder="Select...">
-                  <option value="">Select...</option>
-                  <!-- <option value="Date Posted: Newest to Oldest">
-                    Date Posted: Newest to Oldest
-                  </option>
-                  <option value="Date Posted: Oldest to Newest">
-                    Date Posted: Oldest to Newest
-                  </option> -->
-                  <option value="Opportunity Closes: Newest to Oldest">
-                    Opportunity Closes: Newest to Oldest
-                  </option>
-                  <option value="Opportunity Closes: Oldest to Newest">
-                    Opportunity Closes: Oldest to Newest
-                  </option>
+                <select id="dateSelect" placeholder="Select..." aria-labelledby="filter-select-label-date" title="Select a date filter">
+                  
                 </select>
               </div>
             </div> 
@@ -91,12 +79,13 @@ page_title: Open Projects
              
               <div class="custom-select-container">
                 <label
-                id="filter-select-label"
+                id="filter-select-label-agency"
                 class="font-bold p-1"
                 for="agencySelect"
                 >Filter by agency</label
               >
-                <select id="agencySelect" placeholder="Select an agency...">
+                <select id="agencySelect" placeholder="Select an agency..." aria-labelledby="filter-select-label-agency"
+    title="Select an agency">
                   <option value="">Select an agency...</option>
                   <option value="National Institutes of Health">
                     National Institutes of Health
@@ -110,7 +99,7 @@ page_title: Open Projects
             <div class="flex-1 min-w-30ch">
               <div class="custom-select-container">
                 <label
-                id="filter-select-label"
+                id="filter-select-label-topic"
                 class="font-bold p-1"
                 for="topicSelect"
                 >Filter by topic</label
@@ -119,6 +108,8 @@ page_title: Open Projects
                   id="topicSelect"
                   multiple
                   placeholder="Select topics..."
+                  aria-labelledby="filter-select-label-topic"
+    title="Select one or more topics"
                 >
                   <option value="Impact" data-agency="National">Impact</option>
                   <option value="Metascience" data-agency="National">
@@ -189,8 +180,8 @@ page_title: Open Projects
             <article
               data-agency="{{ item.agency }}"
               data-topic='{{ item.topics | map: "slug" | jsonify }}'
-              data-start-date="{{ item.startDate }}"
-              data-end-date="{{ item.endDate }}"
+              data-opportunity-closes="{{ item.opportunityCloses }}"
+              data-page="open"
             >
               <div
                 class="px-2 py-4 overflow-hidden bg-white border border-gray-200 rounded-md shadow-sm h-full flex flex-col"
@@ -333,390 +324,7 @@ page_title: Open Projects
         </div>
       </div>
     </div>
-    <!--  <script type="text/javascript">
-      // Declare variables globally
-      let selectedDateSort = "";
-      let selectedAgency = "";
-      let selectedTopics = [];
-
-      // Main filter function
-      function filterArticles() {
-        let filterValue = document
-          .getElementById("projSearch")
-          .value.toLowerCase()
-          .trim();
-
-        selectedDateSort = selectedDateSort || "";
-        selectedAgency = selectedAgency || "";
-        selectedTopics = selectedTopics || [];
-
-        console.log("Filtering with:");
-        console.log("Search:", filterValue);
-        console.log("Date Sort:", selectedDateSort);
-        console.log("Agency:", selectedAgency);
-        console.log("Topics:", selectedTopics);
-
-        let articles = document.querySelectorAll("article");
-
-        articles.forEach((article) => {
-          let textContent = article.textContent
-            .replace(/\s+/g, " ")
-            .trim()
-            .toLowerCase();
-
-          let agency = (article.dataset.agency || "").toLowerCase();
-          let topicsJson = article.dataset.topic || "[]";
-          let topicsArray = [];
-
-          try {
-            topicsArray = JSON.parse(topicsJson).map((topic) =>
-              topic.toLowerCase()
-            );
-          } catch (e) {
-            console.error("Error parsing topics JSON:", topicsJson);
-          }
-
-          let matchSearch =
-            filterValue === "" || textContent.includes(filterValue);
-          let matchDateSort =
-            selectedDateSort === "" ||
-            textContent.includes(selectedDateSort.toLowerCase());
-          let matchAgency =
-            selectedAgency === "" ||
-            agency.includes(selectedAgency.toLowerCase());
-          let matchTopics =
-            selectedTopics.length === 0 ||
-            selectedTopics.some((opt) =>
-              topicsArray.includes(opt.toLowerCase())
-            );
-
-          if (matchSearch && matchDateSort && matchAgency && matchTopics) {
-            article.style.display = "block";
-          } else {
-            article.style.display = "none";
-          }
-        });
-      }
-
-      // Event listeners
-      document
-        .getElementById("projSearch")
-        .addEventListener("input", filterArticles);
-
-      document.getElementById("dateSelect").addEventListener("change", (e) => {
-        selectedDateSort = e.target.value || "";
-        filterArticles();
-      });
-
-      document
-        .getElementById("agencySelect")
-        .addEventListener("change", (e) => {
-          selectedAgency = e.target.value || "";
-          filterArticles();
-        });
-
-      document.getElementById("topicSelect").addEventListener("change", (e) => {
-        selectedTopics = Array.from(e.target.selectedOptions || []).map(
-          (o) => o.value
-        );
-        filterArticles();
-      });
-    </script>
-    <script type="text/javascript">
-      const topicList = [
-        { value: "Impact", agency: "National" },
-        { value: "Metascience", agency: "National" },
-        { value: "Evaluation", agency: "National" },
-        { value: "Stewardship", agency: "National" },
-        { value: "Housing", agency: "Department of Treasury" },
-        { value: "Workforce Development", agency: "Department of Treasury" },
-        {
-          value: "State and Local Governments",
-          agency: "Department of Treasury",
-        },
-      ];
-
-      let selectedManually = false;
-
-      const dateSelect = new TomSelect("#dateSelect", {
-        create: false,
-        allowEmptyOption: true,
-        onDropdownOpen: function () {
-          selectedManually = true; // User is opening agency manually
-        },
-        onChange: function (value) {
-          if (value) {
-            console.log(value, "date selected");
-          } else {
-            console.log(value, "date not selected");
-          }
-          selectedManually = false;
-        },
-      });
-      const agencySelect = new TomSelect("#agencySelect", {
-        create: false,
-        allowEmptyOption: true,
-        onDropdownOpen: function () {
-          selectedManually = true; // User is opening agency manually
-        },
-        onChange: function (value) {
-          if (value) {
-            filterTopics(value);
-            if (selectedManually) {
-              topicSelect.clear(); // clear selected topics if user changes agency manually
-            }
-            lockAgency(value);
-          } else {
-            resetTopics();
-            unlockAgency();
-            topicSelect.clear();
-          }
-          selectedManually = false;
-        },
-      });
-
-      const topicSelect = new TomSelect("#topicSelect", {
-        plugins: ["remove_button"],
-        persist: false,
-        create: false,
-        onChange: function (values) {
-          if (values.length > 0) {
-            const selectedAgency = topicList.find(
-              (topic) => topic.value === values[0]
-            ).agency;
-            if (agencySelect.getValue() !== selectedAgency) {
-              agencySelect.setValue(selectedAgency);
-            }
-            filterTopics(selectedAgency);
-            lockAgency(selectedAgency);
-          } else {
-            resetTopics();
-            unlockAgency();
-            agencySelect.clear();
-          }
-        },
-      });
-
-      function filterTopics(agency) {
-        topicSelect.clearOptions();
-
-        topicList.forEach((topic) => {
-          if (topic.agency === agency) {
-            topicSelect.addOption({ value: topic.value, text: topic.value });
-          }
-        });
-
-        topicSelect.refreshOptions(false);
-      }
-
-      function resetTopics() {
-        topicSelect.clearOptions();
-        topicList.forEach((topic) => {
-          topicSelect.addOption({ value: topic.value, text: topic.value });
-        });
-        topicSelect.refreshOptions(false);
-      }
-
-      function lockAgency(selectedAgency) {
-        agencySelect.settings.options = [
-          { value: selectedAgency, text: selectedAgency },
-        ];
-        agencySelect.refreshOptions(false);
-      }
-
-      function unlockAgency() {
-        agencySelect.settings.options = [
-          { value: "National", text: "National" },
-          { value: "Department of Treasury", text: "Department of Treasury" },
-        ];
-        agencySelect.refreshOptions(false);
-      }
-    </script> -->
-    <!-- 
-    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-    <script type="text/javascript">
-      let selectedAgency = "";
-      let selectedTopics = [];
-      let selectedDateSort = "";
-
-      const topicList = [
-        { value: "Impact", agency: "National Institutes of Health" },
-        { value: "Metascience", agency: "National Institutes of Health" },
-        { value: "Evaluation", agency: "National Institutes of Health" },
-        { value: "Stewardship", agency: "National Institutes of Health" },
-        { value: "Housing", agency: "Department of the Treasury" },
-        {
-          value: "Workforce Development",
-          agency: "Department of the Treasury",
-        },
-        {
-          value: "State and Local Governments",
-          agency: "Department of the Treasury",
-        },
-      ];
-
-      const agencySelect = new TomSelect("#agencySelect", {
-        create: false,
-        allowEmptyOption: true,
-        onChange: (value) => {
-          selectedAgency = value || "";
-          if (selectedAgency) {
-            updateTopicsByAgency(selectedAgency);
-          } else {
-            resetTopics();
-          }
-          filterArticles();
-        },
-      });
-
-      const topicSelect = new TomSelect("#topicSelect", {
-        plugins: ["remove_button"],
-        create: false,
-        persist: false,
-        onChange: (values) => {
-          selectedTopics = values || [];
-
-          if (selectedTopics.length > 0) {
-            const topicAgency = topicList.find(
-              (t) => t.value === selectedTopics[0]
-            ).agency;
-            selectedAgency = topicAgency;
-
-            updateAgencyDropdown(topicAgency); // Update agency dropdown options
-            updateTopicsByAgency(topicAgency); // Update topic options
-          } else {
-            resetAgency();
-            resetTopics();
-            selectedAgency = "";
-          }
-
-          filterArticles();
-        },
-      });
-
-      const dateSelect = new TomSelect("#dateSelect", {
-        create: false,
-        allowEmptyOption: true,
-        onChange: (value) => {
-          selectedDateSort = value || "";
-          filterArticles();
-        },
-      });
-
-      document
-        .getElementById("projSearch")
-        .addEventListener("input", filterArticles);
-
-      document.getElementById("clearFilters").addEventListener("click", () => {
-        selectedDateSort = "";
-        selectedAgency = "";
-        selectedTopics = [];
-
-        dateSelect.clear(true);
-        agencySelect.clear(true);
-        topicSelect.clear(true);
-
-        resetAgency();
-        resetTopics();
-
-        document.getElementById("projSearch").value = "";
-
-        filterArticles();
-      });
-
-      function updateTopicsByAgency(agency) {
-        topicSelect.clearOptions();
-
-        topicList.forEach((topic) => {
-          if (topic.agency === agency) {
-            topicSelect.addOption({ value: topic.value, text: topic.value });
-          }
-        });
-
-        topicSelect.refreshOptions(false);
-      }
-
-      function resetTopics() {
-        topicSelect.clearOptions();
-
-        topicList.forEach((topic) => {
-          topicSelect.addOption({ value: topic.value, text: topic.value });
-        });
-
-        topicSelect.refreshOptions(false);
-      }
-
-      function updateAgencyDropdown(agency) {
-        agencySelect.clearOptions();
-
-        agencySelect.addOption({ value: agency, text: agency });
-
-        agencySelect.refreshOptions(false);
-        agencySelect.setValue(agency, true);
-      }
-
-      function resetAgency() {
-        agencySelect.clearOptions();
-
-        const agencies = [...new Set(topicList.map((t) => t.agency))];
-
-        agencies.forEach((agency) => {
-          agencySelect.addOption({ value: agency, text: agency });
-        });
-
-        agencySelect.refreshOptions(false);
-      }
-
-      function filterArticles() {
-        const searchText = document
-          .getElementById("projSearch")
-          .value.trim()
-          .toLowerCase();
-
-        const articles = document.querySelectorAll("article");
-
-        articles.forEach((article) => {
-          let textContent = article.textContent
-            .replace(/\s+/g, " ")
-            .toLowerCase();
-          let agency = (article.dataset.agency || "").toLowerCase();
-          let topicsJson = article.dataset.topic || "[]";
-          let topicsArray = [];
-
-          try {
-            topicsArray = JSON.parse(topicsJson).map((topic) =>
-              topic.toLowerCase()
-            );
-          } catch (e) {
-            console.error("Error parsing topics JSON:", topicsJson);
-          }
-
-          const matchSearch =
-            searchText === "" || textContent.includes(searchText);
-          const matchAgency =
-            selectedAgency === "" ||
-            agency.includes(selectedAgency.toLowerCase());
-          const matchTopics =
-            selectedTopics.length === 0 ||
-            selectedTopics.some((topic) =>
-              topicsArray.includes(topic.toLowerCase())
-            );
-
-          if (matchSearch && matchAgency && matchTopics) {
-            article.style.display = "block";
-          } else {
-            article.style.display = "none";
-          }
-        });
-      }
-
-      // On load, show all agency options
-      resetAgency();
-      resetTopics();
-    </script> -->
-
     {% include evidenceportal-includes/evidenceportalScripts.html %}
-
     <script>
       initFilters({
         topics: [
@@ -734,7 +342,8 @@ page_title: Open Projects
           agency: "Department of the Treasury",
         },
         ],
-        dateOptions: ["Opportunity closes:Newest to Oldest","Opportunity closes:Oldest to Newest"]
+        dateOptions: ["Opportunity Closes:Newest to Oldest","Opportunity Closes:Oldest to Newest"],
+        defaultDateOption: "Opportunity Closes:Newest to Oldest"
       });
     </script>
   </body>
