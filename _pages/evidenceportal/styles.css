@@ -1707,7 +1707,11 @@ h4 {
         padding-left: 4rem;
         padding-right: 4rem;
     }
+
+
 }
+
+
 
 .m-responsive {
     margin-left: 2rem;
@@ -2471,6 +2475,11 @@ a.text-link[target="_blank"]:after {
     border-color: rgb(13 126 162);
 }
 
+@media (max-width: 1280px) {
+    .active {
+        border-color: #fff;
+    }
+}
 
 /* tomselct css for cursor management */
 

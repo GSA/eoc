@@ -268,7 +268,18 @@
     filterArticles(); // Initial sort on load
   }
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.querySelector(
+      'button[aria-label="Open navigation menu"]'
+    );
+    const menu = document.getElementById("example-navbar-danger");
 
+    menuBtn.addEventListener("click", function () {
+      menu.classList.toggle("hidden");
+    });
+  });
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const pageUrl = encodeURIComponent(window.location.href);
