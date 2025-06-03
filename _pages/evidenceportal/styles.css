@@ -2474,6 +2474,7 @@ a.text-link[target="_blank"]:after {
 
 .active {
     border-color: rgb(13 126 162);
+    font-weight: bold;
 }
 
 @media (max-width: 1280px) {
@@ -2493,4 +2494,11 @@ a.text-link[target="_blank"]:after {
 
 #emailError {
     color: red;
+}
+
+
+/* Edge Styling */
+.edge-browser .evidence-content-wrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
