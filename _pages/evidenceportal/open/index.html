@@ -5,9 +5,10 @@ page_title: Open Projects
 ---
 
 <html lang="en">
-  {% include evidenceportal-includes/head.html %}
+    {% include evidenceportal-includes/head.html %}
   <body>
-   {% include evidenceportal-includes/evidenceportalNavbar.html %}
+    <div class="mx-0 bg-white border-0 xl:container xl:p-0 xl:mx-auto xl:border-l xl:border-r xl:border-gray-200 flex flex-col min-h-screen">
+      {% include evidenceportal-includes/evidenceportalNavbar.html %}
     <div class="flex-1">
       <main>
         <header>
@@ -324,7 +325,8 @@ page_title: Open Projects
         </div>
       </div>
     </div>
-    {% include evidenceportal-includes/evidenceportalScripts.html %}
+    </div>
+      {% include evidenceportal-includes/evidenceportalScripts.html %}
     <script>
       initFilters({
         topics: [
