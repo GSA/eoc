@@ -2198,7 +2198,8 @@ a.text-link[target="_blank"]:after {
 
 .gatsby-image-wrapper img {
     bottom: 0;
-    height: 100%;
+    /* height: 100%; */
+    height: auto;
     left: 0;
     margin: 0;
     max-width: none;
