@@ -136,7 +136,7 @@ This is used in blog posts. The index page can be found at blog/index.html
                             <div class="tablet:grid-col-8 margin-top-neg-1">
                                 <p class="eval-pol-agcy-title">{{ annual-evaluation-plans.agency-name }}</p>
                                 {% assign evaluation_plans = annual-evaluation-plans.eval-plan | sort_natural: "name" | reverse  %}
-                                {% for plan in evaluation_plans limit:4 %}
+                                {% for plan in evaluation_plans limit:5 %}
                                 <p class="eval-pol-agcy-link"><a href="{{ plan.link }}" aria-label="{{ annual-evaluation-plans.agency-name }} Agency Evaluation Plan (opens in a new window) for {{ plan.name }}" target="_blank">{{ plan.name }}</a></p>
                                 {% endfor %}
                              </div>
