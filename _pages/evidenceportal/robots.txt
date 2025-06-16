@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: http://localhost:9000/evidenceportal/sitemap-index.xml
+Host: localhost:9000

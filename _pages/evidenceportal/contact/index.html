@@ -1,0 +1,199 @@
+---
+title: Open Projects
+permalink: evidenceportal/contact_us/
+page_title: Contact Us
+---
+
+<html lang="en">
+  {% include evidenceportal-includes/head.html %}
+  <body>
+    <div
+      class="mx-0 bg-white border-0 xl:container xl:p-0 xl:mx-auto xl:border-l xl:border-r xl:border-gray-200 flex flex-col min-h-screen"
+    >
+      {% include evidenceportal-includes/evidenceportalNavbar.html %}
+      <div class="flex-1">
+        <main>
+          <header>
+            <div
+              class="px-4 py-4 mx-0 bg-white md:px-8 md:py-12 xl:px-16 xl:container sm:min-h-15rem"
+              style="
+                background: url({{site.baseurl}}/evidenceportal/static/6592d69147fa7fd1f1ae818edc04dddb/f2090/background.jpg);
+                background-repeat: no-repeat;
+                background-size: auto;
+                background-position-y: center;
+              "
+            >
+              <div
+                class="lg:-mb-28 m-0 lg:m-4 bg-white border-b-8 border-primary border-solid flex align-center"
+              >
+                <div class="w-full p-4 sm:p-12 lg:pl-28 lg:w-3/3">
+                  <h1 class="text-h3 pb-0 sm:text-h1 font-bold text-black">
+                    Contact Us
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </header>
+          <article class="w-full pt-5 px-8 lg:px-16 xl:px-24 lg:w-2/3">
+            <h1 class="mt-8 mb-2 text-h2 font-bold">
+              Questions or feedback about the Evidence Project Portal? We'd love
+              to hear from you!
+            </h1>
+            <p class="mb-10 leading-normal text-body lg:text-body">
+              If you have questions or feedback about the Evidence Project
+              Portal, please complete the information below. Do not use this
+              form to express interest in a specific open project; please use
+              the link on the specific project’s page instead.
+            </p>
+            <form id="contactForm" name="contact" novalidate>
+              <div class="mb-6">
+                <label for="name" class="block mb-2 font-bold text-black"
+                  >Full name</label
+                >
+                <input
+                  name="name"
+                  id="name"
+                  placeholder="John Doe"
+                  type="text"
+                  required
+                  class="w-full px-3 py-2 border text-black"
+                />
+              </div>
+
+              <div class="mb-6">
+                <label for="email" class="block mb-2 font-bold text-black"
+                  >Email address</label
+                >
+                <input
+                  name="email"
+                  id="email"
+                  placeholder="example@example.com"
+                  type="email"
+                  required
+                  class="w-full px-3 py-2 border text-black"
+                />
+                <p id="emailError" class="text-red-500 text-sm hidden">
+                  Invalid email format
+                </p>
+              </div>
+
+              <div class="mb-6">
+                <label for="subject" class="block mb-2 font-bold text-black"
+                  >Subject</label
+                >
+                <input
+                  name="subject"
+                  id="subject"
+                  placeholder="I want to get in touch about ..."
+                  type="text"
+                  required
+                  class="w-full px-3 py-2 border text-black"
+                />
+              </div>
+
+              <div class="mb-6">
+                <label for="message" class="block mb-2 font-bold text-black"
+                  >Message</label
+                >
+                <textarea
+                  name="message"
+                  id="message"
+                  placeholder="Write your message here..."
+                  required
+                  class="w-full h-48 px-3 py-2 border text-black"
+                ></textarea>
+              </div>
+              <div class="flex mt-4 items-center justify-between">
+                <a
+                  id="submitBtn"
+                  class="btn px-4 py-2 text-white bg-gray-400 rounded cursor-not-allowed pointer-events-none"
+                  >Submit</a
+                >
+              </div>
+            </form>
+          </article>
+        </main>
+      </div>
+      <div class="py-6 mt-12 overflow-hidden bg-bottombanner p-responsive">
+        <div class="m-responsive">
+          <div
+            class="w-full flex gap-4 sm:gap-8 items-center justify-center flex-wrap"
+          >
+            <div
+              class="inline-block text-body flex-4 min-w-20ch"
+              id="bottomBannerText"
+            >
+              This evidence project portal is managed by the Office of
+              Management and Budget.<!--  If you have suggestions for how to improve it,
+            please&nbsp;<a
+              class="no-inherit"
+              href="{{site.baseurl}}/evidenceportal/contact/"
+              >let us know!</a
+            > -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include evidenceportal-includes/evidenceportalScripts.html %}
+    <script>
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const subject = document.getElementById("subject");
+      const message = document.getElementById("message");
+      const submitBtn = document.getElementById("submitBtn");
+      const emailError = document.getElementById("emailError");
+
+      // Regex for email validation
+      function isValidEmail(emailStr) {
+        return /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|mil|co|io|us|info|biz)$/i.test(
+          emailStr
+        );
+      }
+
+      // Validate all fields and toggle submit button + error message
+      function validateForm() {
+        const isNameValid = name.value.trim().length > 0;
+        const isEmailValid = isValidEmail(email.value.trim());
+        const isSubjectValid = subject.value.trim().length > 0;
+        const isMessageValid = message.value.trim().length > 0;
+
+        // Show/hide email error message
+        if (!isEmailValid && email.value.trim().length > 0) {
+          emailError.classList.remove("hidden");
+        } else {
+          emailError.classList.add("hidden");
+        }
+
+        if (isNameValid && isEmailValid && isSubjectValid && isMessageValid) {
+          // Enable Submit
+          submitBtn.classList.remove(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "pointer-events-none"
+          );
+          submitBtn.classList.add("bg-blue-600", "cursor-pointer");
+          submitBtn.href = `mailto:evidence@omb.eop.gov?subject=${encodeURIComponent(
+            subject.value
+          )}&body=${encodeURIComponent(
+            `Name: ${name.value}\nEmail: ${email.value}\n\n${message.value}`
+          )}`;
+        } else {
+          // Disable Submit
+          submitBtn.href = "#";
+          submitBtn.classList.remove("bg-blue-600", "cursor-pointer");
+          submitBtn.classList.add(
+            "bg-gray-400",
+            "cursor-not-allowed",
+            "pointer-events-none"
+          );
+        }
+      }
+
+      // Attach validation on input change
+      [name, email, subject, message].forEach((input) => {
+        input.addEventListener("input", validateForm);
+      });
+    </script>
+  </body>
+</html>
