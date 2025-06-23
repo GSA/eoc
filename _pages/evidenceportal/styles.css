@@ -2428,7 +2428,6 @@ a.text-link[target="_blank"]:after {
     display: flex;
     align-items: center;
     gap: 5px;
-    /* Adjust the spacing between icons */
 }
 
 .clear-icon,
