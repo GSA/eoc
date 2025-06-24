@@ -602,12 +602,16 @@ textarea::placeholder {
     .container {
         max-width: 640px;
     }
+
+
 }
 
 @media (min-width: 768px) {
     .container {
         max-width: 768px;
     }
+
+
 }
 
 @media (min-width: 1024px) {
@@ -2490,6 +2494,8 @@ a.text-link[target="_blank"]:after {
     }
 }
 
+
+
 /* tomselct css for cursor management */
 
 .ts-dropdown,
@@ -2508,4 +2514,20 @@ a.text-link[target="_blank"]:after {
 .edge-browser .evidence-content-wrapper {
     padding-left: 2rem;
     padding-right: 2rem;
+}
+
+.p-subpoints {
+
+    margin-left: 2.5in;
+    text-indent: -1.5in;
+
+}
+
+@media (max-width: 600px) {
+    .p-subpoints {
+
+        margin-left: 1.5in;
+        text-indent: 0in;
+
+    }
 }
