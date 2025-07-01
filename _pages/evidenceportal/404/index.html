@@ -17,16 +17,12 @@
       content="Project Portal Example (Site with Queries)"
       data-gatsby-head="true"
     />
-    <meta
-      name="og:title"
-      content="Search the Whole Site!"
-      data-gatsby-head="true"
-    />
+    <meta name="og:title" data-gatsby-head="true" />
     <meta name="description" data-gatsby-head="true" />
     <meta property="og:description" data-gatsby-head="true" />
     <meta
       property="og:url"
-      content="http://localhost:9000/evidenceportal/search/"
+      content="http://localhost:9000/evidenceportal/404/"
       data-gatsby-head="true"
     />
     <meta
@@ -1965,7 +1961,7 @@
       type="application/xml"
       href="/evidenceportal/sitemap-index.xml"
     />
-    <title data-gatsby-head="true">Search the Whole Site!</title>
+    <title data-gatsby-head="true"></title>
   </head>
   <body>
     <div id="___gatsby">
@@ -2175,60 +2171,18 @@
             </div>
           </nav>
           <div class="flex-1">
-            <main>
-              <header>
-                <div
-                  class="px-4 py-4 mx-0 lg:mb-16 bg-white md:px-8 md:py-12 xl:px-16 xl:container sm:min-h-15rem"
-                  style="
-                    background: url(/evidenceportal/static/6592d69147fa7fd1f1ae818edc04dddb/f2090/background.jpg);
-                    background-repeat: no-repeat;
-                    background-size: auto;
-                    background-position-y: center;
-                  "
+            <div class="w-full py-20 px-8 lg:px-16 xl:px-24 lg:w-2/3">
+              <h1 class="text-3xl font-extrabold leading-tight lg:text-5xl">
+                Error 404
+              </h1>
+              <h3 class="text-lg font-medium lg:text-xl">
+                The page you&#x27;re looking for doesn&#x27;t exist.<br /><br /><a
+                  class="text-link"
+                  href="/evidenceportal/"
+                  >Go back to homepage</a
                 >
-                  <div
-                    class="lg:-mb-28 m-0 lg:m-4 bg-white border-b-8 border-primary border-solid flex align-center"
-                  >
-                    <div class="w-full p-4 sm:p-12 lg:pl-28 lg:w-3/3">
-                      <h1 class="text-h3 pb-0 sm:text-h1 font-bold text-black">
-                        Search the Whole Site!
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </header>
-              <div>
-                <div
-                  class="flex flex-col items-center justify-center align-middle text-center px-2"
-                >
-                  <div class="container mx-auto mt-4 border-b-4 border-primary">
-                    <label
-                      id="siteSearch-label"
-                      class="font-bold p-1"
-                      for="siteSearch"
-                      >Search</label
-                    ><input
-                      autofocus=""
-                      class="rounded border-gray-300 hover:border-gray-400"
-                      style="height: 62%"
-                      type="text"
-                      id="siteSearch"
-                      aria-label="Search"
-                      placeholder="Type to search pages..."
-                    />
-                    <div class="pt-2">Number of found pages:<!-- -->0</div>
-                  </div>
-                  <article class="py-6 container mx-auto">
-                    <div
-                      class="grid grid-cols-1 md:mx-4 xl:mx-6 gap-4 justify-self-center"
-                    ></div>
-                    <div class="">
-                      <section><h2>No Results</h2></section>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </main>
+              </h3>
+            </div>
           </div>
           <div class="py-6 mt-12 overflow-hidden bg-bottombanner p-responsive">
             <div class="m-responsive">
@@ -2239,10 +2193,11 @@
                   class="inline-block text-body flex-4 min-w-20ch"
                   id="bottomBannerText"
                 >
-                  If you have suggestions for how to improve the Evidence
-                  Project Portal, please <a
+                  This evidence project portal is managed by the Office of
+                  Management and Budget. If you have suggestions for how to
+                  improve it, please <a
                     class="no-inherit"
-                    href="{{site.baseurl}}/evidenceportal/contact_us/"
+                    href="/evidenceportal/contact_us/"
                     >let us know!</a
                   >
                 </div>
@@ -2269,7 +2224,7 @@
       ></div>
     </div>
     <script id="gatsby-script-loader">
-      /*<![CDATA[*/ window.pagePath = "/search/"; /*]]>*/
+      /*<![CDATA[*/ window.pagePath = "/404/"; /*]]>*/
     </script>
     <!-- slice-start id="_gatsby-scripts-1" -->
     <script id="gatsby-chunk-mapping">

@@ -1,0 +1,352 @@
+---
+title: Open Projects
+permalink: evidenceportal/
+page_title: Open Projects
+---
+<!DOCTYPE html>
+<html lang="en">
+    {% include evidenceportal-includes/head.html %}
+  <body>
+    <div class="mx-0 bg-white border-0 xl:container xl:p-0 xl:mx-auto xl:border-l xl:border-r xl:border-gray-200 flex flex-col min-h-screen">
+      {% include evidenceportal-includes/evidenceportalNavbar.html %}
+    <div class="flex-1">
+      <main>
+        <header>
+          <div
+            class="px-4 py-4 mx-0 lg:mb-16 bg-white md:px-8 md:py-12 xl:px-16 xl:container sm:min-h-15rem"
+            style="
+              background: url({{site.baseurl}}/evidenceportal/static/6592d69147fa7fd1f1ae818edc04dddb/f2090/background.jpg);
+              background-repeat: no-repeat;
+              background-size: auto;
+              background-position-y: center;
+            "
+          >
+            <div
+              class="lg:-mb-28 m-0 lg:m-4 bg-white border-b-8 border-primary border-solid flex align-center"
+            >
+              <div class="w-full p-4 sm:p-12 lg:pl-28 lg:w-3/3">
+                <h1 class="text-h3 pb-0 sm:text-h1 font-bold text-black">
+                  Open Projects
+                </h1>
+                <p class="pt-6 text-body leading-normal">
+                  Federal agencies are committed to building the evidence needed
+                  to inform decision making and improve policy and programmatic
+                  functions, and are interested in engaging with external
+                  researchers outside the government to address timely and
+                  policy-relevant questions. Through their Learning Agendas,
+                  agencies articulate priority questions and initial plans
+                  toward building that evidence. However, agencies cannot do
+                  this work alone.<br /><br />The Evidence Project Portal shares opportunities for
+                  researchers to engage with federal agencies on their
+                  evidence-building needs, and for researchers to express
+                  interest in supporting the opportunities described. This
+                  portal aims to foster the connections needed to develop,
+                  launch, and enhance cross-sector relationships to advance
+                  these evidence-building activities. Learn more about the open projects
+                  below.</br></br>Have questions about the
+                  Portal? Visit our
+                  <a
+                    href="https://www.evaluation.gov/evidenceportal/about/"
+                    class="text-link underline hover:no-underline"
+                    >About</a
+                  >
+                  page.
+                </p>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="relative"><div class="absolute -top-100px"></div></div>
+        <div
+          class="pt-4 pb-10 md:mx-8 lg:mt-6 lg:pt-8 lg:pb-20 overflow-hidden px-2 xl:px-12 bg-white evidence-content-wrapper"
+        >
+          <div
+            class="flex flex-wrap items-end gap-4 mb-8 mx-3 xl:mx-6 bg-white"
+          >
+           <div class="flex-1 min-w-30ch">
+             
+              <div class="custom-select-container">
+                <label
+                id="filter-select-label-date"
+                class="font-bold p-1"
+                for="dateSelect"
+                >Filter by
+              </label>
+                <select id="dateSelect" placeholder="Select..." aria-labelledby="filter-select-label-date" title="Select a date filter">
+                  
+                </select>
+              </div>
+            </div> 
+            <div class="flex-1 min-w-30ch">
+             
+              <div class="custom-select-container">
+                <label
+                id="filter-select-label-agency"
+                class="font-bold p-1"
+                for="agencySelect"
+                >Filter by agency</label
+              >
+                <select id="agencySelect" placeholder="Select an agency..." aria-labelledby="filter-select-label-agency"
+    title="Select an agency">
+                  <option value="">Select an agency...</option>
+                  <option value="National Institutes of Health">
+                    National Institutes of Health
+                  </option>
+                  <option value="Department of the Treasury">
+                    Department of the Treasury
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="flex-1 min-w-30ch">
+              <div class="custom-select-container">
+                <label
+                id="filter-select-label-topic"
+                class="font-bold p-1"
+                for="topicSelect"
+                >Filter by topic</label
+              >
+                <select
+                  id="topicSelect"
+                  multiple
+                  placeholder="Select topics..."
+                  aria-labelledby="filter-select-label-topic"
+    title="Select one or more topics"
+                >
+                  <option value="Impact" data-agency="National">Impact</option>
+                  <option value="Metascience" data-agency="National">
+                    Metascience
+                  </option>
+                  <option value="Evaluation" data-agency="National">
+                    Evaluation
+                  </option>
+                  <option value="Stewardship" data-agency="National">
+                    Stewardship
+                  </option>
+
+                  <option value="Housing" data-agency="Department of Treasury">
+                    Housing
+                  </option>
+                  <option
+                    value="Workforce Development"
+                    data-agency="Department of Treasury"
+                  >
+                    Workforce Development
+                  </option>
+                  <option
+                    value="State and Local Governments"
+                    data-agency="Department of Treasury"
+                  >
+                    State and Local Governments
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="flex-1 min-w-30ch auto-rows-auto flex flex-col">
+              <label
+                id="projSearch-label"
+                class="font-bold p-1"
+                for="projSearch"
+                >Search</label
+              >
+              <input
+                class="rounded border-gray-300 hover:border-gray-400 tomInput"
+                style="height: 44px"
+                type="text"
+                id="projSearch"
+                aria-label="Search"
+                placeholder="Type to filter posts..."
+                fdprocessedid="fmkxn"
+                autocomplete="off"
+              />
+            </div>
+            <span
+              id="clearFilters"
+              style="
+                color: rgb(9 41 64);
+                cursor: pointer;
+                text-decoration: underline;
+                font-size: 14px;
+                margin-left: 10px;
+                font-weight: bold;
+              "
+            >
+              Clear All
+            </span>
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-3 xl:mx-6 gap-4 justify-self-center"
+          >
+            {% for item in site.data.open.page-data.result.data.allProject.nodes
+            %}
+            <article
+              data-agency="{{ item.agency }}"
+              data-topic='{{ item.topics | map: "slug" | jsonify }}'
+              data-opportunity-closes="{{ item.opportunityCloses }}"
+              data-page="open"
+            >
+              <div
+                class="px-2 py-4 overflow-hidden bg-white border border-gray-200 rounded-md shadow-sm h-full flex flex-col"
+              >
+                <div class="mt-4 ml-4">
+                  <div class="flex w-full">
+                    <span class="pt-1 text-body text-primary align-inherit"
+                      ><svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        aria-hidden="true"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                        ></path></svg></span
+                    ><span class="pl-2 uppercase">{{itsm.status}}</span>
+                  </div>
+                </div>
+                <div class="p-5 pb-5">
+                  <div class="pb-4 text-h3 font-bold leading-snug text-black">
+                    {{item.question}}
+                  </div>
+                  <div>
+                    <div class="mt-4 text-body">
+                      <span class="font-bold">Opportunity Closes: </span
+                      ><span>{{item.opportunityCloses | date: "%B %d, %Y" }}</span>
+                    </div>
+                    <div class="mb-4 text-body agency">
+                      <span class="font-bold">Lead Agency: </span
+                      >{{item.agency}}
+                    </div>
+                    <div class="text-tag mt-4">
+                      <figure>
+                        <figcaption
+                          class="font-sans text-black text-tag mb-1 font-extrabold uppercase"
+                        >
+                          Topics
+                        </figcaption>
+                        <ul class="text-tag flex flex-wrap">
+                          {% for topic in item.topics %}
+                          <li
+                            class="px-3 py-1 mt-1 uppercase text-tag whitespace font-semibold mr-2 bg-topics"
+                          >
+                            {{topic.title}}
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </figure>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-5 pb-1 mt-auto border-t-2 border-solid">
+                  <a
+                    class="btn-wide"
+                    href="{{site.baseurl}}/{{item.opportuniy-url}}"
+                    >View Opportunity</a
+                  >
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="flex items-center gap-4 justify-center flex-wrap">
+          <div class="flex-1 flex justify-end">
+            <button class="font-bold pr-4 text-gray-500 pointer-events-none">
+              <svg
+                class="inline"
+                xmlns="http://www.w3.org/2000/svg"
+                width="10.775"
+                height="17.309"
+                viewBox="0 0 10.775 17.309"
+              >
+                <g transform="translate(2.121 1.061)">
+                  <path
+                    data-name="Path 900"
+                    d="M-18540.5,8685l-7.594,7.594,7.594,7.594"
+                    transform="translate(18548.096 -8685)"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  ></path>
+                </g>
+              </svg>
+              Previous
+            </button>
+          </div>
+          <div class="flex items-center gap-4 justify-center">
+            <button class="btn pointer-events-none min-w-3rem p-2 border-solid">
+              1
+            </button>
+          </div>
+          <div class="flex-1 flex justify-start">
+            <button class="font-bold pl-4 text-gray-500 pointer-events-none">
+              Next
+              <svg
+                class="inline-block"
+                xmlns="http://www.w3.org/2000/svg"
+                width="10.775"
+                height="17.309"
+                viewBox="0 0 10.775 17.309"
+              >
+                <g transform="translate(8.654 16.248) rotate(180)">
+                  <path
+                    data-name="Path 900"
+                    d="M-18540.5,8685l-7.594,7.594,7.594,7.594"
+                    transform="translate(18548.096 -8685)"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      </main>
+    </div>
+    <div class="py-6 mt-12 overflow-hidden bg-bottombanner p-responsive">
+      <div class="m-responsive">
+        <div
+          class="w-full flex gap-4 sm:gap-8 items-center justify-center flex-wrap"
+        >
+          <div
+            class="inline-block text-body flex-4 min-w-20ch"
+            id="bottomBannerText"
+          >
+            If you have suggestions for how to improve the Evidence Project Portal,
+            please&nbsp;<a class="no-inherit" href="{{site.baseurl}}/evidenceportal/contact_us/"
+              >let us know!</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+      {% include evidenceportal-includes/evidenceportalScripts.html %}
+    <script>
+      initFilters({
+        topics: [
+        { value: "Impact", agency: "National Institutes of Health" },
+        { value: "Metascience", agency: "National Institutes of Health" },
+        { value: "Evaluation", agency: "National Institutes of Health" },
+        { value: "Stewardship", agency: "National Institutes of Health" },
+        { value: "Housing", agency: "Department of the Treasury" },
+        {
+          value: "Workforce Development",
+          agency: "Department of the Treasury",
+        },
+        {
+          value: "State and Local Governments",
+          agency: "Department of the Treasury",
+        },
+        ],
+        dateOptions: ["Opportunity Closes:Newest to Oldest","Opportunity Closes:Oldest to Newest"],
+        defaultDateOption: "Opportunity Closes:Newest to Oldest"
+      });
+    </script>
+  </body>
+</html>
