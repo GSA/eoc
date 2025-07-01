@@ -1,0 +1,337 @@
+<script src="{{ site.baseurl }}/assets/js/tom-select.complete.min.js"></script>
+<script>
+  function initFilters({
+    topics,
+    dateOptions = [],
+    defaultDateOption = "Opportunity Start Date: Newest to Oldest",
+  }) {
+    let selectedAgency = "";
+    let selectedTopics = [];
+    let selectedDateSort = defaultDateOption;
+
+    const agencies = [...new Set(topics.map((t) => t.agency))];
+    const topicToAgencies = {};
+    topics.forEach((t) => {
+      if (!topicToAgencies[t.value]) topicToAgencies[t.value] = new Set();
+      topicToAgencies[t.value].add(t.agency);
+    });
+
+    function adjustTomSelectInputWidth(selectInstance, shrink = true) {
+      const wrapper = selectInstance.wrapper;
+      const input = wrapper.querySelector(".ts-control input");
+      if (input) {
+        input.style.minWidth = shrink ? "1px" : "";
+        input.style.flex = shrink ? "1 1 auto" : "";
+        input.style.maxWidth = shrink ? "100%" : "";
+      }
+    }
+
+    const agencySelect = new TomSelect("#agencySelect", {
+      plugins: { clear_button: { title: "Remove all selected options" } },
+      create: false,
+      allowEmptyOption: true,
+      onChange: (value) => {
+        selectedAgency = value || "";
+        adjustTomSelectInputWidth(agencySelect, !!value);
+        if (selectedAgency) {
+          updateTopicsByAgency(selectedAgency);
+        } else {
+          if (selectedTopics.length > 0) {
+            const validAgencies = new Set();
+            selectedTopics.forEach((topic) => {
+              topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
+            });
+            updateAgencyDropdown([...validAgencies]);
+          } else {
+            resetTopics();
+          }
+        }
+        filterArticles();
+      },
+    });
+
+    const topicSelect = new TomSelect("#topicSelect", {
+      plugins: ["remove_button"],
+      create: false,
+      persist: false,
+      onChange: (values) => {
+        selectedTopics = values || [];
+        adjustTomSelectInputWidth(topicSelect, selectedTopics.length > 0);
+        if (selectedTopics.length > 0) {
+          const validAgencies = new Set();
+          selectedTopics.forEach((topic) => {
+            topicToAgencies[topic]?.forEach((a) => validAgencies.add(a));
+          });
+          updateAgencyDropdown([...validAgencies]);
+        } else {
+          selectedAgency = "";
+          agencySelect.clear(true);
+          resetAgency();
+          resetTopics();
+        }
+        filterArticles();
+      },
+    });
+
+    const dateSelect = new TomSelect("#dateSelect", {
+      plugins: { clear_button: { title: "Remove all selected options" } },
+      create: false,
+      allowEmptyOption: true,
+      options: dateOptions.map((d) => ({ value: d, text: d })),
+      items: [defaultDateOption],
+      onChange: (value) => {
+        selectedDateSort = value || defaultDateOption;
+        adjustTomSelectInputWidth(dateSelect, !!value);
+        filterArticles();
+      },
+    });
+
+    document
+      .getElementById("projSearch")
+      ?.addEventListener("input", filterArticles);
+
+    document.getElementById("clearFilters")?.addEventListener("click", () => {
+      document.activeElement?.blur();
+      setTimeout(() => {
+        selectedDateSort = defaultDateOption;
+        selectedAgency = "";
+        selectedTopics = [];
+
+        topicSelect.clear(true);
+        document.getElementById("projSearch").value = "";
+
+        resetAgency();
+        resetTopics();
+
+        agencySelect.setValue("");
+        dateSelect.setValue(defaultDateOption);
+
+        agencySelect.refreshOptions(false);
+        dateSelect.refreshOptions(false);
+
+        adjustTomSelectInputWidth(agencySelect, false);
+        adjustTomSelectInputWidth(dateSelect, false);
+        adjustTomSelectInputWidth(topicSelect, false);
+
+        filterArticles();
+      }, 10);
+    });
+
+    function updateTopicsByAgency(agency) {
+      topicSelect.clearOptions();
+      topics
+        .filter((t) => t.agency === agency)
+        .forEach((topic) => {
+          topicSelect.addOption({ value: topic.value, text: topic.value });
+        });
+      topicSelect.refreshOptions(false);
+    }
+
+    function resetTopics() {
+      topicSelect.clearOptions();
+      topics.forEach((topic) => {
+        topicSelect.addOption({ value: topic.value, text: topic.value });
+      });
+      topicSelect.refreshOptions(false);
+    }
+
+    function updateAgencyDropdown(agencyList) {
+      agencySelect.clearOptions();
+      if (agencyList.length === 0) {
+        resetAgency();
+        return;
+      }
+      agencyList.forEach((a) => {
+        agencySelect.addOption({ value: a, text: a });
+      });
+      agencySelect.refreshOptions(false);
+
+      if (
+        agencyList.length === 1 &&
+        (!selectedAgency || agencyList[0] !== selectedAgency)
+      ) {
+        agencySelect.setValue(agencyList[0], true);
+        selectedAgency = agencyList[0];
+        updateTopicsByAgency(selectedAgency);
+      }
+    }
+
+    function resetAgency() {
+      agencySelect.clearOptions();
+      agencies.forEach((a) => agencySelect.addOption({ value: a, text: a }));
+      agencySelect.refreshOptions(false);
+    }
+
+    function filterArticles() {
+      const searchText = document
+        .getElementById("projSearch")
+        .value.trim()
+        .toLowerCase();
+      const articles = Array.from(document.querySelectorAll("article"));
+
+      const visibleArticles = articles.filter((article) => {
+        const textContent = article.textContent
+          .replace(/\s+/g, " ")
+          .toLowerCase();
+        const agency = (article.dataset.agency || "").toLowerCase();
+        const topicsJson = article.dataset.topic || "[]";
+        let topicsArray = [];
+        try {
+          topicsArray = JSON.parse(topicsJson).map((t) => t.toLowerCase());
+        } catch (e) {
+          console.error("Invalid topic JSON:", topicsJson);
+        }
+        const matchSearch =
+          searchText === "" || textContent.includes(searchText);
+        const matchAgency =
+          selectedAgency === "" ||
+          agency.includes(selectedAgency.toLowerCase());
+        const matchTopics =
+          selectedTopics.length === 0 ||
+          selectedTopics.some((t) => topicsArray.includes(t.toLowerCase()));
+        return matchSearch && matchAgency && matchTopics;
+      });
+
+      // Determine sort key
+      let sortKey = "startDate";
+      if (
+        selectedDateSort.toLowerCase().includes("ended") ||
+        selectedDateSort.toLowerCase().includes("completed")
+      ) {
+        sortKey = "endDate";
+      }
+      console.log(sortKey, "key");
+      const isOldestToNewest =
+        selectedDateSort === "Project Ended:Oldest to Newest" ||
+        selectedDateSort === "Project Started:Oldest to Newest";
+      console.log(isOldestToNewest, "isOldestToNewest");
+      visibleArticles.sort((a, b) => {
+        const rawDateA = a.dataset[sortKey];
+        const rawDateB = b.dataset[sortKey];
+        console.log(rawDateA, rawDateB, "raw dates");
+
+        const dateA = rawDateA ? new Date(rawDateA) : new Date("1900-01-01");
+        const dateB = rawDateB ? new Date(rawDateB) : new Date("1900-01-01");
+        console.log(dateA, dateB, "formatted dates");
+        const isValidA = !isNaN(dateA.getTime());
+        const isValidB = !isNaN(dateB.getTime());
+
+        if (!isValidA && !isValidB) return 0;
+        if (!isValidA) return isOldestToNewest ? 1 : -1;
+        if (!isValidB) return isOldestToNewest ? -1 : 1;
+
+        return isOldestToNewest ? dateA - dateB : dateB - dateA;
+      });
+
+      console.log(
+        "%cSorted Dates:",
+        "background: #222; color: #bada55; font-weight: bold;"
+      );
+      console.log(visibleArticles, "VA");
+      visibleArticles?.forEach((wrapper, i) => {
+        const article = wrapper.querySelector("article");
+        const date = article?.dataset[sortKey] || "N/A";
+        console.log(
+          `%c${i + 1}. ${date}`,
+          "background: #f0f0f0; color: #333; padding: 2px 6px;"
+        );
+      });
+      // Update DOM
+      const container = articles[0]?.parentNode;
+      if (container) {
+        // Clear container first to avoid weird append behavior
+        articles.forEach((article) => container.removeChild(article));
+
+        // Then append sorted + visible articles in order
+        visibleArticles.forEach((article) => {
+          article.style.display = "block";
+          container.appendChild(article);
+        });
+
+        // Hide the rest
+        const hiddenArticles = articles.filter(
+          (a) => !visibleArticles.includes(a)
+        );
+        hiddenArticles.forEach((article) => {
+          article.style.display = "none";
+          container.appendChild(article); // still re-add to preserve structure
+        });
+      }
+    }
+
+    // Init dropdowns
+    resetAgency();
+    resetTopics();
+    adjustTomSelectInputWidth(agencySelect, false);
+    adjustTomSelectInputWidth(dateSelect, false);
+    adjustTomSelectInputWidth(topicSelect, false);
+    filterArticles(); // Initial sort on load
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.querySelector(
+      'button[aria-label="Open navigation menu"]'
+    );
+    const menu = document.getElementById("example-navbar-danger");
+
+    menuBtn.addEventListener("click", function () {
+      menu.classList.toggle("hidden");
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const pageUrl = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(document.title);
+
+    // Facebook
+    document
+      .querySelector('[aria-label="Facebook"]')
+      .addEventListener("click", function () {
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
+          "_blank"
+        );
+      });
+
+    // Twitter/X
+    document
+      .querySelector('[aria-label="X / Twitter"]')
+      .addEventListener("click", function () {
+        window.open(
+          `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`,
+          "_blank"
+        );
+      });
+
+    // LinkedIn
+    document
+      .querySelector('[aria-label="LinkedIn"]')
+      .addEventListener("click", function () {
+        window.open(
+          `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`,
+          "_blank"
+        );
+      });
+
+    // Email
+
+    document
+      .querySelector('[aria-label="e-mail"]')
+      .addEventListener("click", function () {
+        const subject = encodeURIComponent(
+          "Sharing a wonderful project opportunity!"
+        );
+        const body = encodeURIComponent(
+          `Hi,\n\nI wanted to share this great opportunity with you. Check it out here: ${window.location.href}`
+        );
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      });
+  });
+</script>
+<script>
+  if (navigator.userAgent.includes("Edg/")) {
+    document.body.classList.add("edge-browser");
+  }
+</script>
