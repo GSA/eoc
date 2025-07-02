@@ -13,6 +13,8 @@ eval-plan:
       link: https://www.sba.gov/sites/default/files/2023-03/FY%202024%20SBA%20Annual%20Evaluation%20Plan-2023-0313.pdf
     - name: FY 2025
       link: https://www.sba.gov/sites/default/files/2024-03/FY%202025%20Annual%20Evaluation%20Plan.pdf
+    - name: FY 2026
+      link: https://www.sba.gov/sites/default/files/2025-06/SBA%20FY%202026%20Annual%20Evaluation%20Plan%205-30-25%20FINAL.pdf
 eval-policy: https://www.sba.gov/document/policy-guidance--framework-guidelines-program-evaluation-us-small-business-administration
 learning-agenda: https://www.sba.gov/document/report-enterprise-learning-agenda
 capacity-assesment: https://www.sba.gov/document/report-evidence-capacity-assessment
