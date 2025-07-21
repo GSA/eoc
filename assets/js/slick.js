@@ -1503,7 +1503,13 @@
 
             });
 
+        // Helper function to validate image URLs
+        function isSafeImageUrl(url) {
+            // Allow only http, https, or data URIs (optionally file://)
+            return typeof url === 'string' &&
+                (/^(https?:|data:image\/)/i).test(url.trim());
         }
+
 
         if (_.options.centerMode === true) {
             if (_.options.infinite === true) {
