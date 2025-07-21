@@ -29,6 +29,15 @@
     'use strict';
     var Slick = window.Slick || {};
 
+    function isValidUrl(url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
     Slick = (function () {
 
         var instanceUid = 0;
@@ -1695,7 +1704,18 @@
 
             };
 
-            imageToLoad.src = imageSource;
+            if (isValidUrl(imageSource)) {
+                imageToLoad.src = imageSource;
+            } else {
+                image
+                    .removeAttr('data-lazy')
+                    .removeClass('slick-loading')
+                    .addClass('slick-lazyload-error');
+
+                _.$slider.trigger('lazyLoadError', [_, image, imageSource]);
+
+                _.progressiveLazyLoad();
+            }
 
         } else {
 
