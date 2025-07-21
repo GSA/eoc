@@ -1489,7 +1489,17 @@
 
                 };
 
-                imageToLoad.src = imageSource;
+                try {
+                    var parsedURL = new URL(imageSource, window.location.origin);
+                    imageToLoad.src = parsedURL.href;
+                } catch (e) {
+                    console.warn('Invalid URL for lazy-loaded image:', imageSource);
+                    image
+                        .removeAttr('data-lazy')
+                        .removeClass('slick-loading')
+                        .addClass('slick-lazyload-error');
+                    _.$slider.trigger('lazyLoadError', [_, image, imageSource]);
+                }
 
             });
 
