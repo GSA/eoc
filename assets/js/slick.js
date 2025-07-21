@@ -1454,6 +1454,55 @@
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
 
+        function loadImages(imagesScope) {
+
+            $('img[data-lazy]', imagesScope).each(function () {
+
+                var image = $(this),
+                    imageSource = $(this).attr('data-lazy'),
+                    imageToLoad = document.createElement('img');
+
+                imageToLoad.onload = function () {
+
+                    image
+                        .animate({ opacity: 0 }, 100, function () {
+                            image
+                                .attr('src', imageSource)
+                                .animate({ opacity: 1 }, 200, function () {
+                                    image
+                                        .removeAttr('data-lazy')
+                                        .removeClass('slick-loading');
+                                });
+                            _.$slider.trigger('lazyLoaded', [_, image, imageSource]);
+                        });
+
+                };
+
+                imageToLoad.onerror = function () {
+
+                    image
+                        .removeAttr('data-lazy')
+                        .removeClass('slick-loading')
+                        .addClass('slick-lazyload-error');
+
+                    _.$slider.trigger('lazyLoadError', [_, image, imageSource]);
+
+                };
+
+                try {
+                    var parsedURL = new URL(imageSource, window.location.origin);
+                    imageToLoad.src = parsedURL.href;
+                } catch (e) {
+                    console.warn('Invalid URL for lazy-loaded image:', imageSource);
+                    image
+                        .removeAttr('data-lazy')
+                        .removeClass('slick-loading')
+                        .addClass('slick-lazyload-error');
+                    _.$slider.trigger('lazyLoadError', [_, image, imageSource]);
+                }
+
+            });
+
         // Helper function to validate image URLs
         function isSafeImageUrl(url) {
             // Allow only http, https, or data URIs (optionally file://)
