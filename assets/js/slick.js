@@ -14,7 +14,7 @@
  Issues: http://github.com/kenwheeler/slick/issues
 
  */
-/* global window, document, define, jQuery, setInterval, clearInterval */
+/* global window, document, define, jQuery, setInterval, clearInterval, DOMPurify */
 (function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
@@ -1460,6 +1460,7 @@
 
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
+                    sanitizedImageSource = DOMPurify.sanitize(imageSource),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function () {
@@ -1467,7 +1468,7 @@
                     image
                         .animate({ opacity: 0 }, 100, function () {
                             image
-                                .attr('src', imageSource)
+                                .attr('src', sanitizedImageSource)
                                 .animate({ opacity: 1 }, 200, function () {
                                     image
                                         .removeAttr('data-lazy')
