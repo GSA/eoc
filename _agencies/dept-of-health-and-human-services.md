@@ -13,6 +13,8 @@ eval-plan:
       link: https://aspe.hhs.gov/reports/2024-hhs-evaluation-plan
     - name: FY 2025
       link: https://aspe.hhs.gov/reports/2025-hhs-evaluation-plan
+    - name: FY 2026
+      link: https://aspe.hhs.gov/reports/2026-hhs-evaluation-plan
 eval-policy: https://aspe.hhs.gov/pdf-report/hhs-evaluation-policy
 learning-agenda: https://aspe.hhs.gov/reports/fy-2023-2026-hhs-evidence-building-plan
 capacity-assesment: https://aspe.hhs.gov/reports/fy-2023-2026-hhs-capacity-assessment
